@@ -131,7 +131,6 @@ defmodule MyDiet.MixProject do
       {:kaffy, "~> 0.11.0"},
       # Docs
       {:ex_doc, "~> 0.30", only: :dev, runtime: false, warn_if_outdated: true},
-      # {:mermaid_ex, "~> 0.3.0", only: :dev},
       # Formatting and linting
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
