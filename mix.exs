@@ -11,7 +11,13 @@ defmodule MyDiet.MixProject do
       aliases: aliases(),
       deps: deps(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
-      listeners: [Phoenix.CodeReloader]
+      listeners: [Phoenix.CodeReloader],
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.html": :test,
+        "coveralls.lcov": :test
+      ]
     ]
   end
 
@@ -75,7 +81,8 @@ defmodule MyDiet.MixProject do
       {:recode, "~> 0.7", only: :dev, runtime: false},
       # Testing
       {:ex_machina, "~> 2.8.0", only: :test},
-      {:mox, "~> 1.0", only: :test}
+      {:mox, "~> 1.0", only: :test},
+      {:excoveralls, "~> 0.18", only: :test}
     ]
   end
 
