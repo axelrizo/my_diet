@@ -37,8 +37,8 @@ A meal is just a combination of foods, but in this case is going to be related w
 
 ```mermaid
 erDiagram
-  food_measures ||--|| meals_food_measures : "is composed by"
-  meals_food_measures ||--|| meals : "is composed by"
+  food_measures ||--o| meals_food_measures : "is composed by"
+  meals_food_measures |o--|| meals : "is composed by"
   meals_food_measures{
     int id PK
     int meal_id FK
@@ -52,3 +52,23 @@ erDiagram
 ```
 
 ## Diets
+
+At the end we have a `diets` schema/table where we are going to store a meals combination to create a whole diet, we can repeat each meal different times, in order to achieve that we need to support that configuration.
+
+With this approach we can create diets composed with different amount of meals in this way we can know how many meals and foods compose the diet and print the shopping list.
+
+```mermaid
+erDiagram
+  meals ||--o| diets_meals : has
+  diets_meals |o--|| diets : has
+  diets_meals{
+    int id PK
+    int meal_id FK
+    int diet_id FK
+    int quantity "times to repeat that meal"
+  }
+  diets{
+    int id PK
+    string name "i.e ('Relaxed')"
+  }
+```
