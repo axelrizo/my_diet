@@ -1,0 +1,21 @@
+{
+  "skip_files": [
+    "_html.ex",
+    "_json.ex",
+    "lib/mix/tasks",
+    "lib/my_diet_web.ex",
+    "lib/my_diet_web/components/core_components.ex",
+    "lib/my_diet_web/components/layouts.ex",
+    "lib/my_diet_web/endpoint.ex",
+    "lib/my_diet_web/gettext.ex",
+    "lib/my_diet_web/router.ex",
+    "lib/my_diet_web/telemetry.ex",
+    "test/"
+  ],
+  "coverage_options": {
+    "html_filter_full_covered": true,
+    "treat_no_relevant_lines_as_covered": true,
+    "floor_coverage": false
+  },
+  "print_summary": false
+}

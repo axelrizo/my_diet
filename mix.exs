@@ -11,7 +11,8 @@ defmodule MyDiet.MixProject do
       aliases: aliases(),
       deps: deps(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
-      listeners: [Phoenix.CodeReloader]
+      listeners: [Phoenix.CodeReloader],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -27,7 +28,13 @@ defmodule MyDiet.MixProject do
 
   def cli do
     [
-      preferred_envs: [precommit: :test]
+      preferred_envs: [
+        precommit: :test,
+        "test.interactive": :test,
+        coveralls: :test,
+        "coveralls.lcov": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -40,6 +47,7 @@ defmodule MyDiet.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # Phoenix and related dependencies
       {:phoenix, "~> 1.8.1"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.13"},
@@ -65,7 +73,18 @@ defmodule MyDiet.MixProject do
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      # Admin dashboard
+      {:kaffy, "~> 0.11.0"},
+      # Formatting and linting
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
+      {:recode, "~> 0.7", only: :dev, runtime: false},
+      # Testing
+      {:ex_machina, "~> 2.8.0", only: :test},
+      {:mox, "~> 1.0", only: :test},
+      {:excoveralls, "~> 0.18", only: :test},
+      {:mix_test_interactive, "~> 5.1", only: :test, runtime: false}
     ]
   end
 

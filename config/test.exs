@@ -35,3 +35,9 @@ config :phoenix, :plug_init_mode, :runtime
 # Enable helpful, but potentially expensive runtime checks
 config :phoenix_live_view,
   enable_expensive_runtime_checks: true
+
+# Test interactive configuration
+config :mix_test_interactive,
+  task: "coveralls.lcov",
+  clear: true,
+  timestamp: true

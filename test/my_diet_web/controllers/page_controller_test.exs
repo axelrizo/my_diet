@@ -1,5 +1,5 @@
 defmodule MyDietWeb.PageControllerTest do
-  use MyDietWeb.ConnCase
+  use MyDietWeb.ConnCase, async: true
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
