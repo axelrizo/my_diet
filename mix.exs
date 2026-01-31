@@ -17,12 +17,20 @@ defmodule MyDiet.MixProject do
     ]
   end
 
+  # Documentation configuration
   defp docs do
     [
       # The main page in the docs
       main: "MyDiet",
-      extras: ["docs/food.md"],
+      extras: extras(),
       before_closing_body_tag: &before_closing_body_tag/1
+    ]
+  end
+
+  defp extras do
+    [
+      "docs/Introduction.md",
+      "docs/food.md"
     ]
   end
 
