@@ -12,9 +12,54 @@ defmodule MyDiet.MixProject do
       deps: deps(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
       listeners: [Phoenix.CodeReloader],
-      test_coverage: [tool: ExCoveralls]
+      test_coverage: [tool: ExCoveralls],
+      docs: docs()
     ]
   end
+
+  defp docs do
+    [
+      # The main page in the docs
+      main: "MyDiet",
+      extras: ["docs/food.md"],
+      before_closing_body_tag: &before_closing_body_tag/1
+    ]
+  end
+
+  defp before_closing_body_tag(:html) do
+    """
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10.2.3/dist/mermaid.min.js"></script>
+    <script>
+    let initialized = false;
+
+    window.addEventListener("exdoc:loaded", () => {
+    if (!initialized) {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: document.body.className.includes("dark") ? "dark" : "default"
+      });
+      initialized = true;
+    }
+
+    let id = 0;
+    for (const codeEl of document.querySelectorAll("pre code.mermaid")) {
+      const preEl = codeEl.parentElement;
+      const graphDefinition = codeEl.textContent;
+      const graphEl = document.createElement("div");
+      const graphId = "mermaid-graph-" + id++;
+      mermaid.render(graphId, graphDefinition).then(({svg, bindFunctions}) => {
+        graphEl.innerHTML = svg;
+        bindFunctions?.(graphEl);
+        preEl.insertAdjacentElement("afterend", graphEl);
+        preEl.remove();
+      });
+    }
+    });
+    </script>
+    """
+  end
+
+  defp before_closing_body_tag(_), do: ""
 
   # Configuration for the OTP application.
   #
@@ -76,6 +121,9 @@ defmodule MyDiet.MixProject do
       {:bandit, "~> 1.5"},
       # Admin dashboard
       {:kaffy, "~> 0.11.0"},
+      # Docs
+      {:ex_doc, "~> 0.30", only: :dev, runtime: false, warn_if_outdated: true},
+      # {:mermaid_ex, "~> 0.3.0", only: :dev},
       # Formatting and linting
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
