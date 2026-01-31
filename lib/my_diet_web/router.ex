@@ -1,5 +1,6 @@
 defmodule MyDietWeb.Router do
   use MyDietWeb, :router
+  use Kaffy.Routes
 
   pipeline :browser do
     plug :accepts, ["html"]

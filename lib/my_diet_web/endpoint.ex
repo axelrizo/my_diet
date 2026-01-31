@@ -26,6 +26,13 @@ defmodule MyDietWeb.Endpoint do
     gzip: not code_reloading?,
     only: MyDietWeb.static_paths()
 
+  # kaffy static assets
+  plug Plug.Static,
+    at: "/kaffy",
+    from: :kaffy,
+    gzip: false,
+    only: ~w(assets)
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
