@@ -72,7 +72,9 @@ defmodule MyDiet.MixProject do
       # Formatting and linting
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
-      {:recode, "~> 0.7", only: :dev, runtime: false}
+      {:recode, "~> 0.7", only: :dev, runtime: false},
+      # Testing
+      {:ex_machina, "~> 2.8.0", only: :test}
     ]
   end
 
