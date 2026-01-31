@@ -74,7 +74,8 @@ defmodule MyDiet.MixProject do
       {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
       {:recode, "~> 0.7", only: :dev, runtime: false},
       # Testing
-      {:ex_machina, "~> 2.8.0", only: :test}
+      {:ex_machina, "~> 2.8.0", only: :test},
+      {:mox, "~> 1.0", only: :test}
     ]
   end
 
