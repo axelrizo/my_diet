@@ -70,7 +70,8 @@ defmodule MyDiet.MixProject do
       # Admin dashboard
       {:kaffy, "~> 0.11.0"},
       # Formatting and linting
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false}
     ]
   end
 
