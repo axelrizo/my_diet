@@ -71,7 +71,8 @@ defmodule MyDiet.MixProject do
       {:kaffy, "~> 0.11.0"},
       # Formatting and linting
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false}
+      {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
+      {:recode, "~> 0.7", only: :dev, runtime: false}
     ]
   end
 
