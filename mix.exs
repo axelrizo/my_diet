@@ -12,12 +12,7 @@ defmodule MyDiet.MixProject do
       deps: deps(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
       listeners: [Phoenix.CodeReloader],
-      test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.html": :test,
-        "coveralls.lcov": :test
-      ]
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -33,7 +28,13 @@ defmodule MyDiet.MixProject do
 
   def cli do
     [
-      preferred_envs: [precommit: :test]
+      preferred_envs: [
+        precommit: :test,
+        "test.interactive": :test,
+        coveralls: :test,
+        "coveralls.lcov": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -83,7 +84,7 @@ defmodule MyDiet.MixProject do
       {:ex_machina, "~> 2.8.0", only: :test},
       {:mox, "~> 1.0", only: :test},
       {:excoveralls, "~> 0.18", only: :test},
-      {:mix_test_interactive, "~> 5.1", only: :dev, runtime: false}
+      {:mix_test_interactive, "~> 5.1", only: :test, runtime: false}
     ]
   end
 
