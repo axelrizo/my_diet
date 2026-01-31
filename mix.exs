@@ -82,7 +82,8 @@ defmodule MyDiet.MixProject do
       # Testing
       {:ex_machina, "~> 2.8.0", only: :test},
       {:mox, "~> 1.0", only: :test},
-      {:excoveralls, "~> 0.18", only: :test}
+      {:excoveralls, "~> 0.18", only: :test},
+      {:mix_test_interactive, "~> 5.1", only: :dev, runtime: false}
     ]
   end
 
