@@ -21,6 +21,16 @@ defmodule MyDietWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: MyDietWeb.Schema,
+      interface: :playground
+
+    forward "/", Absinthe.Plug, schema: MyDietWeb.Schema
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", MyDietWeb do
   #   pipe_through :api
