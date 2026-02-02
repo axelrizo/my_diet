@@ -1,5 +1,6 @@
 defmodule MyDietWeb.Router do
   use MyDietWeb, :router
+  use Kaffy.Routes
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,6 +19,16 @@ defmodule MyDietWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+  end
+
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: MyDietWeb.Schema,
+      interface: :playground
+
+    forward "/", Absinthe.Plug, schema: MyDietWeb.Schema
   end
 
   # Other scopes may use custom stacks.

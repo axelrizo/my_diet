@@ -64,10 +64,8 @@ config :phoenix, :json_library, Jason
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
 
-# Test interactive configuration
-if Mix.env() == :dev do
-  config :mix_test_interactive,
-    task: "coveralls.lcov",
-    clear: true,
-    timestamp: true
-end
+# Kaffy configuration
+config :kaffy,
+  otp_app: :my_diet,
+  ecto_repo: MyDiet.Repo,
+  router: MyDietWeb.Router
