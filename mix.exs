@@ -22,15 +22,27 @@ defmodule MyDiet.MixProject do
     [
       # The main page in the docs
       main: "MyDiet",
+      extra_section: "GUIDES",
       extras: extras(),
+      groups_for_extras: groups_for_extras(),
       before_closing_body_tag: &before_closing_body_tag/1
     ]
   end
 
   defp extras do
     [
-      "docs/Introduction.md",
-      "docs/food.md"
+      "README.md",
+      "docs/features/Admin Panel.md",
+      "docs/installation/Development.md",
+      "docs/introduction/Introduction.md"
+    ]
+  end
+
+  defp groups_for_extras do
+    [
+      Introduction: ~r/introduction\/.?/,
+      Installation: ~r/installation\/.?/,
+      Features: ~r/features\/.?/
     ]
   end
 
