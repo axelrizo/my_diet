@@ -5,7 +5,7 @@ defmodule MyDiet.MixProject do
     [
       app: :my_diet,
       version: "0.1.0",
-      elixir: "~> 1.15",
+      elixir: "~> 1.19",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -20,7 +20,6 @@ defmodule MyDiet.MixProject do
   # Documentation configuration
   defp docs do
     [
-      # The main page in the docs
       main: "MyDiet",
       extra_section: "GUIDES",
       extras: extras(),
@@ -30,20 +29,11 @@ defmodule MyDiet.MixProject do
   end
 
   defp extras do
-    [
-      "README.md",
-      "docs/features/Admin Panel.md",
-      "docs/installation/Development.md",
-      "docs/introduction/Introduction.md"
-    ]
+    ["README.md"]
   end
 
   defp groups_for_extras do
-    [
-      Introduction: ~r/introduction\/.?/,
-      Installation: ~r/installation\/.?/,
-      Features: ~r/features\/.?/
-    ]
+    []
   end
 
   defp before_closing_body_tag(:html) do
