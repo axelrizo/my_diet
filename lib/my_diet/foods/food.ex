@@ -23,7 +23,7 @@ defmodule MyDiet.Foods.Food do
           id: integer(),
           name: String.t(),
           food_category_id: integer(),
-          food_category: FoodCategory.t(),
+          food_category: FoodCategory.t() | nil,
           food_measures: [FoodMeasure.t()],
           inserted_at: NaiveDateTime.t(),
           updated_at: NaiveDateTime.t()

@@ -10,9 +10,9 @@ At the end we have tables like this:
 
 ```mermaid
 erDiagram
-  categories |o--o{ foods : has
+  food_categories |o--o{ foods : has
   foods ||--|{ food_measures : has
-  categories{
+  food_categories{
     int id PK
     string name "i.e ('dairy', 'fruit')"
   }
