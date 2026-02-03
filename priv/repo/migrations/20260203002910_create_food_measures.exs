@@ -8,7 +8,7 @@ defmodule MyDiet.Repo.Migrations.CreateFoodMeasures do
       add :fats, :decimal, precision: 10, scale: 2, null: false
       add :proteins, :decimal, precision: 10, scale: 2, null: false
 
-      add :food_id, references(:foods), null: false
+      add :food_id, references(:foods, validate: false), null: false
 
       timestamps()
     end
