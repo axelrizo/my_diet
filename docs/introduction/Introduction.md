@@ -39,9 +39,9 @@ A meal is just a combination of foods, but in this case is going to be related w
 
 ```mermaid
 erDiagram
-  food_measures ||--o| meals_food_measures : "is composed by"
-  meals_food_measures |o--|| meals : "is composed by"
-  meals_food_measures{
+  food_measures ||--o| meal_ingredients : "compose"
+  meal_ingredients |o--|| meals : "belongs to"
+  meal_ingredients{
     int id PK
     int meal_id FK
     int food_measure_id FK
@@ -61,9 +61,9 @@ With this approach we can create diets composed with different amount of meals i
 
 ```mermaid
 erDiagram
-  meals ||--o| diets_meals : has
-  diets_meals |o--|| diets : has
-  diets_meals{
+  meals ||--o| diet_plans : compose
+  diet_plans |o--|| diets : belongs
+  diet_plans{
     int id PK
     int meal_id FK
     int diet_id FK
