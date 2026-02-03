@@ -94,7 +94,7 @@ jobs:
         run: mix compile --warnings-as-errors
 
       - name: Run excellent_migrations
-        run: mix excellent.migrations
+        run: mix excellent_migrations.check_safety
 
       - name: Run credo
         run: mix credo --strict
