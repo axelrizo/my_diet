@@ -29,11 +29,11 @@ defmodule MyDiet.MixProject do
   end
 
   defp extras do
-    ["README.md"]
+    ["README.md", "docs/introduction/Introduction.md"]
   end
 
   defp groups_for_extras do
-    []
+    [Introduction: ~r/^docs\/introduction\//]
   end
 
   defp before_closing_body_tag(:html) do
