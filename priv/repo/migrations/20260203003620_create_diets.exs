@@ -13,7 +13,7 @@ defmodule MyDiet.Repo.Migrations.CreateDiets do
 
     create unique_index(:diets, [:name], concurrently: true)
 
-    create table(:diets_meals) do
+    create table(:diet_plans) do
       add :quantity, :decimal, precision: 10, scale: 2, null: false
 
       add :meal_id, references(:meals, validate: false), null: false
@@ -22,6 +22,6 @@ defmodule MyDiet.Repo.Migrations.CreateDiets do
       timestamps()
     end
 
-    create unique_index(:diets_meals, [:diet_id, :meal_id], concurrently: true)
+    create unique_index(:diet_plans, [:diet_id, :meal_id], concurrently: true)
   end
 end

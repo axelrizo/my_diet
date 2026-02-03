@@ -1,4 +1,4 @@
-defmodule MyDiet.Diets.DietsMeals.DietsMeal do
+defmodule MyDiet.Diets.DietPlans.DietPlan do
   use Ecto.Schema
 
   schema "diets_meals" do
