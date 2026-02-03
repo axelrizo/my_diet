@@ -1,4 +1,4 @@
-defmodule MyDiet.Categories.Category do
+defmodule MyDiet.Foods.FoodCategories.FoodCategory do
   @moduledoc """
   Represents a category of food items.
   """
@@ -26,7 +26,7 @@ defmodule MyDiet.Categories.Category do
           updated_at: NaiveDateTime.t()
         }
 
-  schema "categories" do
+  schema "food_categories" do
     field :name, :string
 
     has_many :foods, Food

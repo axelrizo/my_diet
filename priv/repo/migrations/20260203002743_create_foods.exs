@@ -8,7 +8,7 @@ defmodule MyDiet.Repo.Migrations.CreateFoods do
     create table(:foods) do
       add :name, :string, null: false
 
-      add :category_id, references(:categories, validate: false)
+      add :food_category_id, references(:food_categories, validate: false)
 
       timestamps()
     end

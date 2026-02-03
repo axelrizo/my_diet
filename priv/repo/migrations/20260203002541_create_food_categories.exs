@@ -1,16 +1,16 @@
-defmodule MyDiet.Repo.Migrations.CreateCategories do
+defmodule MyDiet.Repo.Migrations.CreateFoodCategories do
   use Ecto.Migration
 
   @disable_ddl_transaction true
   @disable_migration_lock true
 
   def change do
-    create table(:categories) do
+    create table(:food_categories) do
       add :name, :string, null: false
 
       timestamps()
     end
 
-    create unique_index(:categories, [:name], concurrently: true)
+    create unique_index(:food_categories, [:name], concurrently: true)
   end
 end

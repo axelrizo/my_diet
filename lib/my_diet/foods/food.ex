@@ -5,7 +5,7 @@ defmodule MyDiet.Foods.Food do
 
   use Ecto.Schema
 
-  alias MyDiet.Categories.Category
+  alias MyDiet.Foods.FoodCategories.FoodCategory
   alias MyDiet.Foods.FoodMeasures.FoodMeasure
 
   @typedoc """
@@ -22,8 +22,8 @@ defmodule MyDiet.Foods.Food do
   @type t :: %__MODULE__{
           id: integer(),
           name: String.t(),
-          category_id: integer(),
-          category: Category.t(),
+          food_category_id: integer(),
+          food_category: FoodCategory.t(),
           food_measures: [FoodMeasure.t()],
           inserted_at: NaiveDateTime.t(),
           updated_at: NaiveDateTime.t()
@@ -32,7 +32,7 @@ defmodule MyDiet.Foods.Food do
   schema "foods" do
     field :name, :string
 
-    belongs_to :category, Category
+    belongs_to :food_category, FoodCategory
 
     has_many :food_measures, FoodMeasure
 
