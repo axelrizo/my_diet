@@ -1,4 +1,8 @@
 defmodule MyDiet.Kaffy.Config do
+  @moduledoc """
+  Kaffy configuration module for MyDiet application.
+  """
+
   def create_resources(_conn) do
     [
       food: [
