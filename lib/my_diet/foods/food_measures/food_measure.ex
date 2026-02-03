@@ -6,6 +6,7 @@ defmodule MyDiet.Foods.FoodMeasures.FoodMeasure do
   use Ecto.Schema
 
   alias MyDiet.Foods.Food
+  alias MyDiet.Meals.MealIngredients.MealIngredient
 
   @typedoc """
   Represents the nutritional measures for a food item.
@@ -38,7 +39,8 @@ defmodule MyDiet.Foods.FoodMeasures.FoodMeasure do
     field :fats, :decimal
     field :proteins, :decimal
 
-    belongs_to :food, MyDiet.Foods.Food
+    belongs_to :food, Food
+    belongs_to :meal_ingredient, MealIngredient
 
     timestamps()
   end
