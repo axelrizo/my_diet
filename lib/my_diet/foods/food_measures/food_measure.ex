@@ -18,6 +18,8 @@ defmodule MyDiet.Foods.FoodMeasures.FoodMeasure do
     - `fats`: The amount of fats in the portion.
     - `proteins`: The amount of proteins in the portion.
     - `food_id`: The identifier of the associated food item.
+    - `food`: The associated `Food` struct.
+    - `meal_ingredients`: A list of `MealIngredient` structs that use this food measure.
     - `inserted_at`: The timestamp when the food measure was created.
     - `updated_at`: The timestamp when the food measure was last updated.
   """
@@ -29,6 +31,7 @@ defmodule MyDiet.Foods.FoodMeasures.FoodMeasure do
           proteins: Decimal.t(),
           food_id: integer(),
           food: Food.t(),
+          meal_ingredients: [MealIngredient.t()],
           inserted_at: NaiveDateTime.t(),
           updated_at: NaiveDateTime.t()
         }
@@ -40,7 +43,8 @@ defmodule MyDiet.Foods.FoodMeasures.FoodMeasure do
     field :proteins, :decimal
 
     belongs_to :food, Food
-    belongs_to :meal_ingredient, MealIngredient
+
+    has_many :meal_ingredients, MealIngredient
 
     timestamps()
   end
