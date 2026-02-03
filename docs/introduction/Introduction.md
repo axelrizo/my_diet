@@ -10,7 +10,7 @@ At the end we have tables like this:
 
 ```mermaid
 erDiagram
-  categories ||--o{ foods : has
+  categories |o--o{ foods : has
   foods ||--|{ food_measures : has
   categories{
     int id PK
