@@ -68,4 +68,5 @@ import_config "#{config_env()}.exs"
 config :kaffy,
   otp_app: :my_diet,
   ecto_repo: MyDiet.Repo,
-  router: MyDietWeb.Router
+  router: MyDietWeb.Router,
+  resources: &MyDiet.Kaffy.Config.create_resources/1
