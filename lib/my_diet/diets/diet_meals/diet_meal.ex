@@ -32,7 +32,7 @@ defmodule MyDiet.Diets.DietMeals.DietMeal do
           updated_at: NaiveDateTime.t()
         }
 
-  schema "diets_meals" do
+  schema "diet_meals" do
     field :quantity, :decimal
 
     belongs_to :diet, Diet
