@@ -61,9 +61,9 @@ With this approach we can create diets composed with different amount of meals i
 
 ```mermaid
 erDiagram
-  meals ||--o| diet_plans : compose
-  diet_plans |o--|| diets : belongs
-  diet_plans{
+  meals ||--o| diet_meals : compose
+  diet_meals |o--|| diets : belongs
+  diet_meals{
     int id PK
     int meal_id FK
     int diet_id FK
