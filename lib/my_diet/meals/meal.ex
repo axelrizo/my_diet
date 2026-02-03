@@ -5,8 +5,8 @@ defmodule MyDiet.Meals.Meal do
 
   use Ecto.Schema
 
-  alias MyDiet.Meals.MealIngredients.MealIngredient
   alias MyDiet.Diets.DietMeals.DietMeal
+  alias MyDiet.Meals.MealIngredients.MealIngredient
 
   @typedoc """
   Represents a meal in the system.

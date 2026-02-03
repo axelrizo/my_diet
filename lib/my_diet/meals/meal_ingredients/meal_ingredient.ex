@@ -5,8 +5,8 @@ defmodule MyDiet.Meals.MealIngredients.MealIngredient do
 
   use Ecto.Schema
 
-  alias MyDiet.Meals.Meal
   alias MyDiet.Foods.FoodMeasures.FoodMeasure
+  alias MyDiet.Meals.Meal
 
   @typedoc """
   Ingredient in a meal linking a food measure with a specified quantity.
