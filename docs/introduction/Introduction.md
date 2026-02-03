@@ -1,5 +1,7 @@
 # Introduction
 
+Main relations aiming to register diets in this system, as you can see is simple you can add many meals as you want in the week, just needing to be sure about how much calories you are to consume along the period of time that you determine.
+
 ## Food
 
 We store foods in the table `foods` and we don't relate them directly with its `carbohydrates`, `fats` and `proteins` because we want to be able of create foods easily by just know what the foods labels has, sometimes commercial foods are just labeled with fixed amounts as `2 slices`, `1 portion`, `1 can`, etc... so having it decoupled we can classify the main food in their own category what is it, if is `meat`, `fruit`, `vegetable` or `dairy`.
@@ -9,7 +11,7 @@ At the end we have tables like this:
 ```mermaid
 erDiagram
   categories ||--o{ foods : has
-  foods ||--o{ food_measures : has
+  foods ||--|{ food_measures : has
   categories{
     int id PK
     string name "i.e ('dairy', 'fruit')"

@@ -1,18 +1,37 @@
 # MyDiet
 
-To start your Phoenix server:
+A managing application to handle diets, generate shopping lists and else. You can measure your calories and organize your meal prep for the week.
 
-* Run `mix setup` to install and setup dependencies
-* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Tech Stack
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+- Elixir 1.19.5
+- Erlang 28.3.1
+- NodeJS 25.4.0
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Prerequisites
 
-## Learn more
+- Install [Docker](https://docs.docker.com/get-started/introduction/get-docker-desktop/)
+- Install [asdf](https://asdf-vm.com/guide/introduction.html)
 
-* Official website: https://www.phoenixframework.org/
-* Guides: https://hexdocs.pm/phoenix/overview.html
-* Docs: https://hexdocs.pm/phoenix
-* Forum: https://elixirforum.com/c/phoenix-forum
-* Source: https://github.com/phoenixframework/phoenix
+## Quick Setup
+
+1. Enter with your console to the project folder then:
+   ```bash
+   asdf install
+   ```
+2. Run the containers
+   ```bash
+   docker compose up -d
+   ```
+3. Setup phoenix app
+   ```bash
+   make bootstrap
+   ```
+4. Run the phoenix server
+   ```bash
+   mix phx.server
+   ```
+
+## Docs
+
+You can read more about it in `/docs/` folder

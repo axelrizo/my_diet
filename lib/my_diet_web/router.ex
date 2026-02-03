@@ -26,7 +26,7 @@ defmodule MyDietWeb.Router do
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: MyDietWeb.Schema,
-      interface: :playground
+      interface: :simple
 
     forward "/", Absinthe.Plug, schema: MyDietWeb.Schema
   end
