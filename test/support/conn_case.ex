@@ -28,6 +28,7 @@ defmodule MyDietWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import MyDietWeb.ConnCase
+      import MyDiet.Factory
     end
   end
 
