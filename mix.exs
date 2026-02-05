@@ -130,8 +130,9 @@ defmodule MyDiet.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       # Graphql
-      {:absinthe, "~> 1.7"},
+      {:absinthe, "~> 1.9"},
       {:absinthe_plug, "~> 1.5"},
+      {:dataloader, "~> 1.0.0"},
       # Admin dashboard
       {:kaffy, "~> 0.11.0"},
       # Docs
