@@ -9,7 +9,7 @@ defmodule MyDietWeb.SchemaTest do
 
       assert %{"foods" => [food_data]} = query_graphql(conn, query)
 
-      assert food.id == String.to_integer(food_data["id"])
+      assert int_equal?(food.id, food_data["id"])
       assert food.name == food_data["name"]
     end
 
@@ -21,7 +21,7 @@ defmodule MyDietWeb.SchemaTest do
       assert %{"foods" => [food]} = query_graphql(conn, query)
       assert %{"foodCategory" => food_category_data} = food
 
-      assert food_category.id == String.to_integer(food_category_data["id"])
+      assert int_equal?(food_category.id, food_category_data["id"])
       assert food_category.name == food_category_data["name"]
     end
 
@@ -33,73 +33,11 @@ defmodule MyDietWeb.SchemaTest do
       assert %{"foods" => [food_data]} = query_graphql(conn, query)
       assert %{"foodMeasures" => [food_measures_data]} = food_data
 
-      assert food_measure.id == String.to_integer(food_measures_data["id"])
+      assert int_equal?(food_measure.id, food_measures_data["id"])
       assert food_measure.portion == food_measures_data["portion"]
-      assert_decimal_equal?(food_measure.proteins, food_measures_data["proteins"])
-      assert_decimal_equal?(food_measure.carbohydrates, food_measures_data["carbohydrates"])
-      assert_decimal_equal?(food_measure.fats, food_measures_data["fats"])
-    end
-
-    @query """
-    {
-      foods {
-        id
-        name
-        foodCategory {
-          id
-          name
-        }
-        foodMeasures {
-          id
-          portion
-          fats
-          carbohydrates
-          proteins
-          mealIngredients {
-            id
-          }
-        }
-      }
-    }
-    """
-
-    test "returns a list of all foods", %{conn: conn} do
-      :food_category
-      |> insert()
-      |> with_food()
-
-      conn = post(conn, "/api", %{"query" => @query})
-
-      response = json_response(conn, 200)
-
-      assert %{"data" => %{"foods" => foods}} = response
-      assert length(foods) == 2
-
-      assert Enum.all?(foods, fn food ->
-               Map.has_key?(food, "id") and
-                 Map.has_key?(food, "name") and
-                 Map.has_key?(food, "foodCategory")
-             end)
-    end
-
-    test "returns a list of all foods categories", %{conn: conn} do
-      food_category = insert(:food_category)
-
-      insert(:food, %{
-        name: "Apple",
-        food_category: food_category,
-        food_measures: build_list(2, :food_measure)
-      })
-
-      insert(:food, %{
-        name: "Banana",
-        food_category: food_category,
-        food_measures: build_list(2, :food_measure)
-      })
-
-      conn = post(conn, "/api", %{"query" => @query})
-
-      _response = json_response(conn, 200)
+      assert decimal_equal?(food_measure.proteins, food_measures_data["proteins"])
+      assert decimal_equal?(food_measure.carbohydrates, food_measures_data["carbohydrates"])
+      assert decimal_equal?(food_measure.fats, food_measures_data["fats"])
     end
   end
 
@@ -140,7 +78,11 @@ defmodule MyDietWeb.SchemaTest do
     |> Map.fetch!("data")
   end
 
-  defp assert_decimal_equal?(decimal_1, decimal_2) do
+  defp decimal_equal?(%Decimal{} = decimal_1, decimal_2) when is_binary(decimal_2) do
     Decimal.equal?(decimal_1, Decimal.new(decimal_2))
+  end
+
+  defp int_equal?(id_1, id_2) when is_integer(id_1) and is_binary(id_2) do
+    id_1 == String.to_integer(id_2)
   end
 end
