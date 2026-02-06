@@ -1,7 +1,7 @@
 defmodule MyDietWeb.Schema.ScalarTypes do
   use Absinthe.Schema.Notation
 
-  scalar :decimal do
+  scalar :decimal, description: "A decimal value" do
     parse(fn
       %Absinthe.Blueprint.Input.String{value: value} ->
         case Decimal.parse(value) do

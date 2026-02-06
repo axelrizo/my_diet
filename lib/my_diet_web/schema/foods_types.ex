@@ -6,6 +6,7 @@ defmodule MyDietWeb.Schema.FoodsTypes do
   alias MyDiet.Foods
   alias MyDiet.Meals
 
+  @desc "A food item, which belongs to a category and has multiple measures"
   object :food do
     field :id, :id
     field :name, non_null(:string)
@@ -19,6 +20,7 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     end
   end
 
+  @desc "A category of food items"
   object :food_category do
     field :id, :id
     field :name, non_null(:string)
@@ -28,6 +30,7 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     end
   end
 
+  @desc "A measure of a food item"
   object :food_measure do
     field :id, :id
     field :portion, non_null(:string)

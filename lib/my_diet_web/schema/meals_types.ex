@@ -5,6 +5,7 @@ defmodule MyDietWeb.Schema.MealsTypes do
 
   alias MyDiet.Meals
 
+  @desc "A meal, which consists of multiple ingredients"
   object :meal do
     field :id, :id
     field :name, non_null(:string)
@@ -14,6 +15,7 @@ defmodule MyDietWeb.Schema.MealsTypes do
     end
   end
 
+  @desc "An ingredient within a meal"
   object :meal_ingredient do
     field :id, :id
     field :quantity, non_null(:decimal)

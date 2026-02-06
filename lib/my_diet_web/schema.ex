@@ -23,19 +23,22 @@ defmodule MyDietWeb.Schema do
   end
 
   query do
+    @desc "Get all foods"
     field :foods, list_of(:food) do
       resolve(fn _parent, _args, _resolution ->
         {:ok, Repo.all(Foods.Food)}
       end)
     end
 
-    field :all_food_categories, list_of(:food_category) do
+    @desc "Get all food categories"
+    field :food_categories, list_of(:food_category) do
       resolve(fn _parent, _args, _resolution ->
         {:ok, Repo.all(Foods.FoodCategories.FoodCategory)}
       end)
     end
 
-    field :all_meals, list_of(:meal) do
+    @desc "Get all meals"
+    field :meals, list_of(:meal) do
       resolve(fn _parent, _args, _resolution ->
         {:ok, Repo.all(MyDiet.Meals.Meal)}
       end)
