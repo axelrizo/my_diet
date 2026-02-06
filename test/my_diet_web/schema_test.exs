@@ -14,7 +14,8 @@ defmodule MyDietWeb.SchemaTest do
     end
 
     test "returns food category relation", %{conn: conn} do
-      food_category = :food_category |> insert() |> with_food()
+      food_category = insert(:food_category)
+      insert(:food, food_category: food_category)
 
       query = "{ foods { foodCategory { id name } } }"
 
@@ -26,7 +27,7 @@ defmodule MyDietWeb.SchemaTest do
     end
 
     test "returns food measures relation", %{conn: conn} do
-      %{food_measures: [food_measure]} = :food |> insert() |> with_food_measure()
+      food_measure = insert(:food_measure)
 
       query = "{ foods { foodMeasures { id portion proteins carbohydrates fats } } }"
 
@@ -38,6 +39,19 @@ defmodule MyDietWeb.SchemaTest do
       assert decimal_equal?(food_measure.proteins, food_measures_data["proteins"])
       assert decimal_equal?(food_measure.carbohydrates, food_measures_data["carbohydrates"])
       assert decimal_equal?(food_measure.fats, food_measures_data["fats"])
+    end
+
+    test "returns meal ingredients relation", %{conn: conn} do
+      meal_ingredient = insert(:meal_ingredient)
+
+      query = "{ foods { name foodMeasures { id portion mealIngredients { id quantity } } } }"
+
+      assert %{"foods" => [food_data]} = query_graphql(conn, query)
+      assert %{"foodMeasures" => [food_measures_data]} = food_data
+      assert %{"mealIngredients" => [meal_ingredient_data]} = food_measures_data
+
+      assert int_equal?(meal_ingredient.id, meal_ingredient_data["id"])
+      assert decimal_equal?(meal_ingredient.quantity, meal_ingredient_data["quantity"])
     end
   end
 
@@ -54,7 +68,7 @@ defmodule MyDietWeb.SchemaTest do
     end
 
     test "returns food relation", %{conn: conn} do
-      %{foods: [food]} = :food_category |> insert() |> with_food()
+      food = insert(:food)
 
       query = "{ foodCategories { foods { id name } } }"
 
@@ -79,7 +93,7 @@ defmodule MyDietWeb.SchemaTest do
     end
 
     test "returns meal ingredient relation", %{conn: conn} do
-      %{meal_ingredients: [meal_ingredient]} = :meal |> insert() |> with_meal_ingredient()
+      meal_ingredient = insert(:meal_ingredient)
 
       query = "{ meals { mealIngredients { id quantity } } }"
 
@@ -91,8 +105,7 @@ defmodule MyDietWeb.SchemaTest do
     end
 
     test "returns food measure relation", %{conn: conn} do
-      %{meal_ingredients: [%{food_measure: food_measure}]} =
-        :meal |> insert() |> with_meal_ingredient()
+      %{food_measure: food_measure} = insert(:meal_ingredient)
 
       query =
         "{ meals { mealIngredients { foodMeasure { id portion proteins carbohydrates fats } } } }"
