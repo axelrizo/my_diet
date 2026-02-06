@@ -1,6 +1,7 @@
 defmodule MyDietWeb.Schema do
   use Absinthe.Schema
 
+  import_types(MyDietWeb.Schema.ScalarTypes)
   import_types(MyDietWeb.Schema.FoodsTypes)
   import_types(MyDietWeb.Schema.MealsTypes)
 
@@ -19,28 +20,6 @@ defmodule MyDietWeb.Schema do
 
   def plugins do
     [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
-  end
-
-  scalar :decimal do
-    parse(fn
-      %Absinthe.Blueprint.Input.String{value: value} ->
-        case Decimal.parse(value) do
-          {decimal, ""} -> {:ok, decimal}
-          {_, _} -> :error
-          :error -> :error
-        end
-
-      %Absinthe.Blueprint.Input.Float{value: value} ->
-        {:ok, Decimal.from_float(value)}
-
-      %Absinthe.Blueprint.Input.Integer{value: value} ->
-        {:ok, Decimal.new(value)}
-
-      _ ->
-        :error
-    end)
-
-    serialize(fn decimal -> Decimal.to_string(decimal) end)
   end
 
   query do
