@@ -89,6 +89,24 @@ defmodule MyDietWeb.SchemaTest do
       assert int_equal?(meal_ingredient.id, meal_ingredient_data["id"])
       assert decimal_equal?(meal_ingredient.quantity, meal_ingredient_data["quantity"])
     end
+
+    test "returns food measure relation", %{conn: conn} do
+      %{meal_ingredients: [%{food_measure: food_measure}]} =
+        :meal |> insert() |> with_meal_ingredient()
+
+      query =
+        "{ meals { mealIngredients { foodMeasure { id portion proteins carbohydrates fats } } } }"
+
+      assert %{"meals" => [meal_data]} = query_graphql(conn, query)
+      assert %{"mealIngredients" => [meal_ingredient_data]} = meal_data
+      assert %{"foodMeasure" => food_measure_data} = meal_ingredient_data
+
+      assert int_equal?(food_measure.id, food_measure_data["id"])
+      assert food_measure.portion == food_measure_data["portion"]
+      assert decimal_equal?(food_measure.proteins, food_measure_data["proteins"])
+      assert decimal_equal?(food_measure.carbohydrates, food_measure_data["carbohydrates"])
+      assert decimal_equal?(food_measure.fats, food_measure_data["fats"])
+    end
   end
 
   defp query_graphql(conn, query) do
