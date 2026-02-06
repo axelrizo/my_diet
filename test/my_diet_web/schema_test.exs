@@ -5,12 +5,39 @@ defmodule MyDietWeb.SchemaTest do
     test "returns food list", %{conn: conn} do
       food = insert(:food)
 
-      query = " { foods { id name } } "
+      query = "{ foods { id name } }"
 
-      assert %{"foods" => [returned_food]} = query_graphql(conn, query)
+      assert %{"foods" => [food_data]} = query_graphql(conn, query)
 
-      assert food.id == String.to_integer(returned_food["id"])
-      assert food.name == returned_food["name"]
+      assert food.id == String.to_integer(food_data["id"])
+      assert food.name == food_data["name"]
+    end
+
+    test "returns food category relation", %{conn: conn} do
+      food_category = :food_category |> insert() |> with_food()
+
+      query = "{ foods { foodCategory { id name } } }"
+
+      assert %{"foods" => [food]} = query_graphql(conn, query)
+      assert %{"foodCategory" => food_category_data} = food
+
+      assert food_category.id == String.to_integer(food_category_data["id"])
+      assert food_category.name == food_category_data["name"]
+    end
+
+    test "returns food measures relation", %{conn: conn} do
+      %{food_measures: [food_measure]} = insert(:food, food_measures: [build(:food_measure)])
+
+      query = "{ foods { foodMeasures { id portion proteins carbohydrates fats } } }"
+
+      assert %{"foods" => [food_data]} = query_graphql(conn, query)
+      assert %{"foodMeasures" => [food_measures_data]} = food_data
+
+      assert food_measure.id == String.to_integer(food_measures_data["id"])
+      assert food_measure.portion == food_measures_data["portion"]
+      assert_decimal_equal?(food_measure.proteins, food_measures_data["proteins"])
+      assert_decimal_equal?(food_measure.carbohydrates, food_measures_data["carbohydrates"])
+      assert_decimal_equal?(food_measure.fats, food_measures_data["fats"])
     end
 
     @query """
@@ -111,5 +138,9 @@ defmodule MyDietWeb.SchemaTest do
     |> post("/api", %{"query" => query})
     |> json_response(200)
     |> Map.fetch!("data")
+  end
+
+  defp assert_decimal_equal?(decimal_1, decimal_2) do
+    Decimal.equal?(decimal_1, Decimal.new(decimal_2))
   end
 end
