@@ -41,6 +41,31 @@ defmodule MyDietWeb.SchemaTest do
     end
   end
 
+  describe "query: foodCategories" do
+    test "returns food category list", %{conn: conn} do
+      food_category = insert(:food_category)
+
+      query = "{ foodCategories { id name } }"
+
+      assert %{"foodCategories" => [food_category_data]} = query_graphql(conn, query)
+
+      assert int_equal?(food_category.id, food_category_data["id"])
+      assert food_category.name == food_category_data["name"]
+    end
+
+    test "returns food relation", %{conn: conn} do
+      %{foods: [food]} = :food_category |> insert() |> with_food()
+
+      query = "{ foodCategories { foods { id name } } }"
+
+      assert %{"foodCategories" => [food_category_data]} = query_graphql(conn, query)
+      assert %{"foods" => [food_data]} = food_category_data
+
+      assert int_equal?(food.id, food_data["id"])
+      assert food.name == food_data["name"]
+    end
+  end
+
   describe "query: allMeals" do
     @query """
     {
