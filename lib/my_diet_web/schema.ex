@@ -1,4 +1,8 @@
 defmodule MyDietWeb.Schema do
+  @moduledoc """
+  This module defines the GraphQL schema.
+  """
+
   use Absinthe.Schema
 
   import_types(MyDietWeb.Schema.ScalarTypes)

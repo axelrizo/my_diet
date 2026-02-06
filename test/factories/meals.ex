@@ -1,4 +1,6 @@
 defmodule MyDiet.Factories.Meals do
+  @moduledoc false
+
   alias MyDiet.Meals.Meal
   alias MyDiet.Meals.MealIngredients.MealIngredient
 

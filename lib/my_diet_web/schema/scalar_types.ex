@@ -1,4 +1,8 @@
 defmodule MyDietWeb.Schema.ScalarTypes do
+  @moduledoc """
+  This module defines custom scalar types for the GraphQL schema.
+  """
+
   use Absinthe.Schema.Notation
 
   scalar :decimal, description: "A decimal value" do

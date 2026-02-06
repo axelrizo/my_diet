@@ -1,7 +1,9 @@
 defmodule MyDiet.Factories.Foods do
+  @moduledoc false
+
+  alias MyDiet.Foods.Food
   alias MyDiet.Foods.FoodCategories.FoodCategory
   alias MyDiet.Foods.FoodMeasures.FoodMeasure
-  alias MyDiet.Foods.Food
 
   defmacro __using__(_opts) do
     quote do

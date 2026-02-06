@@ -1,10 +1,14 @@
 defmodule MyDietWeb.Schema.MealsTypes do
+  @moduledoc """
+  This module defines the GraphQL types for meals and their related entities.
+  """
+
   use Absinthe.Schema.Notation
 
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
-  alias MyDiet.Meals
   alias MyDiet.Foods
+  alias MyDiet.Meals
 
   @desc "A meal, which consists of multiple ingredients"
   object :meal do
