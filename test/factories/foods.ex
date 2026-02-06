@@ -25,6 +25,11 @@ defmodule MyDiet.Factories.Foods do
           proteins: Decimal.new("7.0")
         }
       end
+
+      def with_food(%FoodCategory{} = food_category) do
+        food = insert(:food, food_category: food_category)
+        %{food_category | foods: [food]}
+      end
     end
   end
 end
