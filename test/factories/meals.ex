@@ -12,15 +12,10 @@ defmodule MyDiet.Factories.Meals do
 
       def meal_ingredient_factory do
         %MealIngredient{
-          quantity: sequence(:quantity, &Decimal.new(&1))
+          quantity: sequence(:quantity, &Decimal.new(&1), start_at: 1),
+          food_measure: build(:food_measure),
+          meal: build(:meal)
         }
-      end
-
-      def with_meal_ingredient(%Meal{} = meal) do
-        food_measure = :food_measure |> build() |> with_food()
-        meal_ingredient = insert(:meal_ingredient, meal: meal, food_measure: food_measure)
-
-        %{meal | meal_ingredients: [meal_ingredient]}
       end
     end
   end
