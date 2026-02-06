@@ -66,33 +66,33 @@ defmodule MyDietWeb.SchemaTest do
     end
   end
 
-  describe "query: allMeals" do
-    @query """
-    {
-      meals {
-        name
-        mealIngredients {
-          id
-          foodMeasure {
-            id
-          }
-        }
-      }
-    }
-    """
+  describe "query: meals" do
+    test "returns a list of meals", %{conn: conn} do
+      meal = insert(:meal)
 
-    test "returns a list of all meals", %{conn: conn} do
-      meal1 = insert(:meal, %{name: "Breakfast"})
-      meal2 = insert(:meal, %{name: "Lunch"})
-      food_measure = insert(:food_measure, %{food: build(:food)})
-      food_measure2 = insert(:food_measure, %{food: build(:food)})
+      query = "{ meals { id name } }"
 
-      insert(:meal_ingredient, %{meal: meal1, food_measure: food_measure, quantity: 100})
-      insert(:meal_ingredient, %{meal: meal2, food_measure: food_measure2, quantity: 200})
+      assert %{"meals" => [meal_data]} = query_graphql(conn, query)
 
-      conn = post(conn, "/api", %{"query" => @query})
+      assert int_equal?(meal.id, meal_data["id"])
+      assert meal.name == meal_data["name"]
+    end
 
-      _response = json_response(conn, 200)
+    test "returns meal ingredient relation", %{conn: conn} do
+      %{meal_ingredients: [meal_ingredient]} =
+        insert(:meal,
+          meal_ingredients: [
+            build(:meal_ingredient, food_measure: build(:food_measure, food: build(:food)))
+          ]
+        )
+
+      query = "{ meals { mealIngredients { id quantity } } }"
+
+      assert %{"meals" => [meal_data]} = query_graphql(conn, query)
+      assert %{"mealIngredients" => [meal_ingredient_data]} = meal_data
+
+      assert int_equal?(meal_ingredient.id, meal_ingredient_data["id"])
+      assert decimal_equal?(meal_ingredient.quantity, meal_ingredient_data["quantity"])
     end
   end
 
