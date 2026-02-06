@@ -11,13 +11,8 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     field :id, :id
     field :name, non_null(:string)
 
-    field :food_category, :food_category do
-      resolve(dataloader(Foods))
-    end
-
-    field :food_measures, list_of(:food_measure) do
-      resolve(dataloader(Foods))
-    end
+    field :food_category, :food_category, resolve: dataloader(Foods)
+    field :food_measures, list_of(:food_measure), resolve: dataloader(Foods)
   end
 
   @desc "A category of food items"
@@ -25,9 +20,7 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     field :id, :id
     field :name, non_null(:string)
 
-    field :foods, list_of(:food) do
-      resolve(dataloader(Foods))
-    end
+    field :foods, list_of(:food), resolve: dataloader(Foods)
   end
 
   @desc "A measure of a food item"
@@ -38,12 +31,7 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     field :carbohydrates, non_null(:decimal)
     field :proteins, non_null(:decimal)
 
-    field :food, :food do
-      resolve(dataloader(Foods))
-    end
-
-    field :meal_ingredients, list_of(:meal_ingredient) do
-      resolve(dataloader(Meals))
-    end
+    field :food, :food, resolve: dataloader(Foods)
+    field :meal_ingredients, list_of(:meal_ingredient), resolve: dataloader(Meals)
   end
 end

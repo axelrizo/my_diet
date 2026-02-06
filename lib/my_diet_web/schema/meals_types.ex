@@ -10,9 +10,7 @@ defmodule MyDietWeb.Schema.MealsTypes do
     field :id, :id
     field :name, non_null(:string)
 
-    field :meal_ingredients, list_of(:meal_ingredient) do
-      resolve(dataloader(Meals))
-    end
+    field :meal_ingredients, list_of(:meal_ingredient), resolve: dataloader(Meals)
   end
 
   @desc "An ingredient within a meal"
@@ -20,8 +18,6 @@ defmodule MyDietWeb.Schema.MealsTypes do
     field :id, :id
     field :quantity, non_null(:decimal)
 
-    field :food_measure, :food_measure do
-      resolve(dataloader(Meals))
-    end
+    field :food_measure, :food_measure, resolve: dataloader(Meals)
   end
 end
