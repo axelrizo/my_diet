@@ -28,7 +28,21 @@ defmodule MyDiet.Factories.Foods do
 
       def with_food(%FoodCategory{} = food_category) do
         food = insert(:food, food_category: food_category)
+
         %{food_category | foods: [food]}
+      end
+
+      def with_food(%FoodMeasure{} = food_measure) do
+        food_category = insert(:food_category)
+        food = insert(:food, food_measures: [food_measure], food_category: food_category)
+
+        %{food_measure | food: food}
+      end
+
+      def with_food_measure(%Food{} = food) do
+        food_measure = insert(:food_measure, food: food)
+
+        %{food | food_measures: [food_measure]}
       end
     end
   end
