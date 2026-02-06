@@ -10,6 +10,6 @@ bootstrap:
 check:
 	mix format &&\
 	mix excellent_migrations.check_safety &&\
-	mix recode &&\
+	mix recode --autocorrect &&\
 	mix coveralls &&\
 	mix credo --strict 
