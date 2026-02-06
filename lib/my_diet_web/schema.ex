@@ -29,10 +29,6 @@ defmodule MyDietWeb.Schema do
     field :food_categories, list_of(:food_category), resolve: &Foods.list_food_categories/3
 
     @desc "Get all meals"
-    field :meals, list_of(:meal) do
-      resolve(fn _parent, _args, _resolution ->
-        {:ok, Repo.all(MyDiet.Meals.Meal)}
-      end)
-    end
+    field :meals, list_of(:meal), resolve: &Meals.list_meals/3
   end
 end
