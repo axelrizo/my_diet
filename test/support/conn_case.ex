@@ -29,6 +29,8 @@ defmodule MyDietWeb.ConnCase do
       import Phoenix.ConnTest
       import MyDietWeb.ConnCase
       import MyDiet.Factory
+
+      alias MyDiet.Repo
     end
   end
 
