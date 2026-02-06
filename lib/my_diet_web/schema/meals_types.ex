@@ -4,6 +4,7 @@ defmodule MyDietWeb.Schema.MealsTypes do
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   alias MyDiet.Meals
+  alias MyDiet.Foods
 
   @desc "A meal, which consists of multiple ingredients"
   object :meal do
@@ -18,6 +19,6 @@ defmodule MyDietWeb.Schema.MealsTypes do
     field :id, :id
     field :quantity, non_null(:decimal)
 
-    field :food_measure, :food_measure, resolve: dataloader(Meals)
+    field :food_measure, :food_measure, resolve: dataloader(Foods)
   end
 end
