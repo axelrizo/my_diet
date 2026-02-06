@@ -5,14 +5,7 @@ defmodule MyDietWeb.SchemaTest do
     test "returns food list", %{conn: conn} do
       food = insert(:food)
 
-      query = """
-      {
-        foods {
-          id
-          name
-        }
-      }
-      """
+      query = " { foods { id name } } "
 
       assert %{"foods" => [returned_food]} = query_graphql(conn, query)
 
