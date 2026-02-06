@@ -1,9 +1,8 @@
 defmodule MyDietWeb.Schema do
   use Absinthe.Schema
 
-  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
-
   import_types(MyDietWeb.Schema.FoodsTypes)
+  import_types(MyDietWeb.Schema.MealsTypes)
 
   alias MyDiet.Foods
   alias MyDiet.Meals
@@ -61,24 +60,6 @@ defmodule MyDietWeb.Schema do
       resolve(fn _parent, _args, _resolution ->
         {:ok, Repo.all(MyDiet.Meals.Meal)}
       end)
-    end
-  end
-
-  object :meal do
-    field :id, :id
-    field :name, non_null(:string)
-
-    field :meal_ingredients, list_of(:meal_ingredient) do
-      resolve(dataloader(Meals))
-    end
-  end
-
-  object :meal_ingredient do
-    field :id, :id
-    field :quantity, non_null(:decimal)
-
-    field :food_measure, :food_measure do
-      resolve(dataloader(Meals))
     end
   end
 end
