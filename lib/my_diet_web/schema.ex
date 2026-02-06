@@ -8,6 +8,7 @@ defmodule MyDietWeb.Schema do
   alias MyDiet.Foods
   alias MyDiet.Meals
   alias MyDiet.Repo
+  alias MyDietWeb.Resolvers
 
   def context(ctx) do
     loader =
@@ -24,18 +25,11 @@ defmodule MyDietWeb.Schema do
 
   query do
     @desc "Get all foods"
-    field :foods, list_of(:food) do
-      resolve(fn _parent, _args, _resolution ->
-        {:ok, Repo.all(Foods.Food)}
-      end)
-    end
+    field :foods, list_of(:food), resolve: &Resolvers.Foods.list_foods/3
 
     @desc "Get all food categories"
-    field :food_categories, list_of(:food_category) do
-      resolve(fn _parent, _args, _resolution ->
-        {:ok, Repo.all(Foods.FoodCategories.FoodCategory)}
-      end)
-    end
+    field :food_categories, list_of(:food_category),
+      resolve: &Resolvers.Foods.list_food_categories/3
 
     @desc "Get all meals"
     field :meals, list_of(:meal) do
