@@ -1,20 +1,24 @@
 defmodule MyDiet.Factories.Foods do
+  alias MyDiet.Foods.FoodCategories.FoodCategory
+  alias MyDiet.Foods.FoodMeasures.FoodMeasure
+  alias MyDiet.Foods.Food
+
   defmacro __using__(_opts) do
     quote do
       def food_factory do
-        %MyDiet.Foods.Food{
+        %Food{
           name: sequence(:name, &"Food_#{&1}")
         }
       end
 
       def food_category_factory do
-        %MyDiet.Foods.FoodCategories.FoodCategory{
+        %FoodCategory{
           name: sequence(:name, &"Food_Category_#{&1}")
         }
       end
 
       def food_measure_factory do
-        %MyDiet.Foods.FoodMeasures.FoodMeasure{
+        %FoodMeasure{
           portion: "100g",
           carbohydrates: Decimal.new("10.0"),
           fats: Decimal.new("5.0"),
