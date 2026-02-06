@@ -19,10 +19,10 @@ defmodule MyDiet.Factories.Foods do
 
       def food_measure_factory do
         %FoodMeasure{
-          portion: "100g",
-          carbohydrates: Decimal.new("10.0"),
-          fats: Decimal.new("5.0"),
-          proteins: Decimal.new("7.0")
+          portion: sequence(:portion, &"#{&1}g"),
+          carbohydrates: sequence(:carbohydrates, &Decimal.new("#{&1}.0")),
+          fats: sequence(:fats, &Decimal.new("#{&1}.0")),
+          proteins: sequence(:proteins, &Decimal.new("#{&1}.0"))
         }
       end
 
