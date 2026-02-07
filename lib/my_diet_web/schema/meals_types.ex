@@ -10,19 +10,27 @@ defmodule MyDietWeb.Schema.MealsTypes do
   alias MyDiet.Foods
   alias MyDiet.Meals
 
-  @desc "A meal, which consists of multiple ingredients"
+  @desc "A meal, which consists of multiple food measures (meal ingredients)"
   object :meal do
+    @desc "The unique identifier of the meal"
     field :id, :id
+
+    @desc "The name of the meal (e.g., 'Eggs and Toast', 'Chicken Salad')"
     field :name, non_null(:string)
 
+    @desc "The ingredients that make up this meal, each with a specific food measure and quantity"
     field :meal_ingredients, list_of(:meal_ingredient), resolve: dataloader(Meals)
   end
 
   @desc "An ingredient within a meal"
   object :meal_ingredient do
+    @desc "The unique identifier of the meal ingredient"
     field :id, :id
+
+    @desc "The quantity of the food measure used in this meal ingredient (e.g., 2 for 2 cups)"
     field :quantity, non_null(:decimal)
 
+    @desc "The meal that this ingredient belongs to"
     field :food_measure, :food_measure, resolve: dataloader(Foods)
   end
 end

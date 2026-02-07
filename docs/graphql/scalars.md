@@ -6,7 +6,7 @@ The `Boolean` scalar type represents `true` or `false`.
 
 ## Decimal
 
-A decimal value
+It represents a decimal value `Decimal` type from the `decimal` library. It can be used to represent precise decimal numbers.
 
 ## ID
 

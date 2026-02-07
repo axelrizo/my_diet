@@ -5,7 +5,8 @@ defmodule MyDietWeb.Schema.ScalarTypes do
 
   use Absinthe.Schema.Notation
 
-  scalar :decimal, description: "A decimal value" do
+  @desc "It represents a decimal value `Decimal` type from the `decimal` library. It can be used to represent precise decimal numbers."
+  scalar :decimal do
     parse(fn
       %Absinthe.Blueprint.Input.String{value: value} ->
         case Decimal.parse(value) do
