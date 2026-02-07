@@ -39,15 +39,10 @@ defmodule MyDietWeb.Schema do
   mutation do
     @desc "Create a new food category"
     field :create_food_category, type: :food_category do
+      @desc "Name of the food category, e.g., 'Fruits', 'Vegetables', Must be unique."
       arg(:name, non_null(:string))
 
-      resolve(fn _parent, %{name: name}, _context ->
-        {:ok,
-         %MyDiet.Foods.FoodCategories.FoodCategory{
-           id: 1,
-           name: name
-         }}
-      end)
+      resolve(&Foods.create_food_category/3)
     end
   end
 end
