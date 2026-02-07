@@ -153,7 +153,7 @@ defmodule MyDiet.MixProject do
       # Admin dashboard
       {:kaffy, "~> 0.11.0"},
       # Docs
-      {:ex_doc, "~> 0.30", only: :dev, runtime: false, warn_if_outdated: true},
+      {:ex_doc, "~> 0.30", runtime: false, warn_if_outdated: true},
       {:graphql_markdown, "~> 0.4.3"},
       # Formatting and linting
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},

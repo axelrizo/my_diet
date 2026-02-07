@@ -60,11 +60,19 @@ COPY assets assets
 # compile assets
 RUN mix assets.deploy
 
+# Generate docs
+COPY docs ./docs
+COPY README.md ./
+RUN mix docs &&\
+  mkdir -p priv/static/doc &&\
+  cp -r doc/* priv/static/doc/
+
 # Changes to config/runtime.exs don't require recompiling the code
 COPY config/runtime.exs config/
 
 COPY rel rel
 RUN mix release
+
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities

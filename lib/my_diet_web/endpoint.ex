@@ -33,6 +33,13 @@ defmodule MyDietWeb.Endpoint do
     gzip: false,
     only: ~w(assets)
 
+  # docs static assets
+  plug Plug.Static,
+    at: "/",
+    from: :my_diet,
+    gzip: false,
+    only: ~w(doc)
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
