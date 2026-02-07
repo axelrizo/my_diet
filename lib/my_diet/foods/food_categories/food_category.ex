@@ -41,5 +41,6 @@ defmodule MyDiet.Foods.FoodCategories.FoodCategory do
     food_category
     |> cast(attrs, [:name])
     |> validate_required([:name])
+    |> unique_constraint(:name)
   end
 end
