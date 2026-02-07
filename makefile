@@ -13,4 +13,5 @@ precommit:
 	mix recode --autocorrect &&\
 	mix coveralls &&\
 	mix credo --strict  &&\
+	mix absinthe.schema.sdl &&\
 	mix docs
