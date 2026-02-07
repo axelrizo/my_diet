@@ -29,11 +29,28 @@ defmodule MyDiet.MixProject do
   end
 
   defp extras do
-    ["README.md", "docs/introduction/Introduction.md"]
+    ["README.md", "docs/introduction/Introduction.md"] ++ graphql_files()
+  end
+
+  defp graphql_files do
+    [
+      "docs/graphql/enums.md",
+      "docs/graphql/inputs.md",
+      "docs/graphql/interfaces.md",
+      "docs/graphql/mutations.md",
+      "docs/graphql/objects.md",
+      "docs/graphql/queries.md",
+      "docs/graphql/scalars.md",
+      "docs/graphql/unions.md",
+      "docs/graphql/subscriptions.md"
+    ]
   end
 
   defp groups_for_extras do
-    [Introduction: ~r/^docs\/introduction\//]
+    [
+      Introduction: ~r/^docs\/introduction\//,
+      GraphQL: ~r/^docs\/graphql\//
+    ]
   end
 
   defp before_closing_body_tag(:html) do
@@ -137,6 +154,7 @@ defmodule MyDiet.MixProject do
       {:kaffy, "~> 0.11.0"},
       # Docs
       {:ex_doc, "~> 0.30", only: :dev, runtime: false, warn_if_outdated: true},
+      {:graphql_markdown, "~> 0.4.3"},
       # Formatting and linting
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
@@ -168,7 +186,12 @@ defmodule MyDiet.MixProject do
         "esbuild my_diet --minify",
         "phx.digest"
       ],
-      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
+      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"],
+      docs: [
+        "absinthe.schema.json",
+        "graphql_gen_markdown -f schema.json -o docs/graphql -m",
+        "docs"
+      ]
     ]
   end
 end
