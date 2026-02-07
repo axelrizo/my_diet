@@ -2,6 +2,10 @@
 
 A managing application to handle diets, generate shopping lists and else. You can measure your calories and organize your meal prep for the week.
 
+- Links:
+   - [Admin dashboard](https://my-diet-solitary-leaf-113.fly.dev/admin/)
+   - [GraphQL Interface](https://my-diet-solitary-leaf-113.fly.dev/api/graphiql)
+
 ## Tech Stack
 
 - Elixir 1.19.5
