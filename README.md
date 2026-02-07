@@ -34,4 +34,10 @@ A managing application to handle diets, generate shopping lists and else. You ca
 
 ## Docs
 
-You can read more about it in `/docs/` folder
+You can read more about it in `/docs/` folder.
+
+Or generate and read them directly.
+
+```bash
+mix docs --open
+```
