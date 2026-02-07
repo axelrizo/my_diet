@@ -61,7 +61,8 @@ COPY assets assets
 RUN mix assets.deploy
 
 # Generate docs
-COPY docs docs
+COPY docs ./docs
+COPY README.md ./
 RUN mix docs &&\
   mkdir -p priv/static/doc &&\
   cp -r doc/* priv/static/doc/
