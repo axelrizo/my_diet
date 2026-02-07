@@ -4,8 +4,8 @@ A managing application to handle diets, generate shopping lists and else. You ca
 
 - Links:
   - [Admin dashboard(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/admin/)
-  - [GraphQL Interface(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/api/graphiql)
-  - [Online-Docs(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/api/graphiql?query=query%20FoodCategories%20%7B%0A%20%20foodCategories%20%7B%0A%20%20%20%20foods%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A%0Aquery%20Foods%20%7B%0A%20%20foods%20%7B%0A%20%20%20%20foodCategory%20%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20foodMeasures%20%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A%0Aquery%20Meals%20%7B%0A%20%20meals%20%7B%0A%20%20%20%20id%0A%20%20%20%20mealIngredients%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20name%0A%20%20%7D%0A%7D)
+  - [GraphQL Interface(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/api/graphiql?query=query%20FoodCategories%20%7B%0A%20%20foodCategories%20%7B%0A%20%20%20%20foods%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A%0Aquery%20Foods%20%7B%0A%20%20foods%20%7B%0A%20%20%20%20foodCategory%20%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20foodMeasures%20%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A%0Aquery%20Meals%20%7B%0A%20%20meals%20%7B%0A%20%20%20%20id%0A%20%20%20%20mealIngredients%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20name%0A%20%20%7D%0A%7D)
+  - [Online-Docs(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/doc/readme.html)
 
 ## Tech Stack
 
@@ -39,9 +39,7 @@ A managing application to handle diets, generate shopping lists and else. You ca
 
 ## Docs
 
-You can read more about it in `/docs/` folder.
-
-Or generate and read them directly.
+You can either read the [docs online](https://my-diet-solitary-leaf-113.fly.dev/doc/readme.html), check the folder [/docs](./docs/) or generate them directly using:
 
 ```bash
 mix docs --open
