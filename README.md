@@ -3,8 +3,9 @@
 A managing application to handle diets, generate shopping lists and else. You can measure your calories and organize your meal prep for the week.
 
 - Links:
-   - [Admin dashboard](https://my-diet-solitary-leaf-113.fly.dev/admin/)
-   - [GraphQL Interface](https://my-diet-solitary-leaf-113.fly.dev/api/graphiql)
+  - [Admin dashboard(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/admin/)
+  - [GraphQL Interface(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/api/graphiql)
+  - [Online-Docs(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/api/graphiql?query=query%20FoodCategories%20%7B%0A%20%20foodCategories%20%7B%0A%20%20%20%20foods%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A%0Aquery%20Foods%20%7B%0A%20%20foods%20%7B%0A%20%20%20%20foodCategory%20%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20foodMeasures%20%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%7D%0A%7D%0A%0Aquery%20Meals%20%7B%0A%20%20meals%20%7B%0A%20%20%20%20id%0A%20%20%20%20mealIngredients%7B%0A%20%20%20%20%20%20__typename%0A%20%20%20%20%7D%0A%20%20%20%20name%0A%20%20%7D%0A%7D)
 
 ## Tech Stack
 
