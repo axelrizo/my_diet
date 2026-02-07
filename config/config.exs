@@ -69,4 +69,8 @@ config :kaffy,
   otp_app: :my_diet,
   ecto_repo: MyDiet.Repo,
   router: MyDietWeb.Router,
-  resources: &MyDiet.Kaffy.Config.create_resources/1
+  resources: &MyDiet.Kaffy.Config.create_resources/1,
+  hide_dashboard: true,
+  home_page: [schema: [:diet, :diet]]
+
+config :absinthe, schema: MyDietWeb.Schema

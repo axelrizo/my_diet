@@ -21,7 +21,7 @@
     "{mix,.formatter}.exs",
     "{apps,config,test}/**/*.{ex,exs}",
     "lib/my_diet/**/*.ex",
-    "lib/my_diet/**/*.ex"
+    "lib/my_diet_web/**/*.ex"
   ],
   formatters: [Recode.CLIFormatter],
   # Can also be set/reset with `--manifest`/`--no-manifest`.

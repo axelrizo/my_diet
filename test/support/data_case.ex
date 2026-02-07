@@ -26,6 +26,7 @@ defmodule MyDiet.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import MyDiet.DataCase
+      import MyDiet.Factory
     end
   end
 

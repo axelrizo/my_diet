@@ -1,0 +1,57 @@
+schema {
+  query: RootQueryType
+}
+
+type RootQueryType {
+  "Get all foods"
+  foods: [Food]
+
+  "Get all food categories"
+  foodCategories: [FoodCategory]
+
+  "Get all meals"
+  meals: [Meal]
+}
+
+"A meal, which consists of multiple ingredients"
+type Meal {
+  id: ID
+  name: String!
+  mealIngredients: [MealIngredient]
+}
+
+"An ingredient within a meal"
+type MealIngredient {
+  id: ID
+  quantity: Decimal!
+  foodMeasure: FoodMeasure
+}
+
+"A food item, which belongs to a category and has multiple measures"
+type Food {
+  id: ID
+  name: String!
+  foodCategory: FoodCategory
+  foodMeasures: [FoodMeasure]
+}
+
+"A category of food items"
+type FoodCategory {
+  id: ID
+  name: String!
+  foods: [Food]
+}
+
+"A measure of a food item"
+type FoodMeasure {
+  id: ID
+  portion: String!
+  fats: Decimal!
+  carbohydrates: Decimal!
+  proteins: Decimal!
+  food: Food
+  mealIngredients: [MealIngredient]
+}
+
+"A decimal value"
+scalar Decimal

@@ -6,10 +6,12 @@ bootstrap:
 	mix ecto.create &&\
 	mix ecto.migrate
 
-# Run all checks
-check:
+# Run all checks before committing code
+precommit:
 	mix format &&\
 	mix excellent_migrations.check_safety &&\
-	mix recode &&\
+	mix recode --autocorrect &&\
 	mix coveralls &&\
-	mix credo --strict 
+	mix credo --strict  &&\
+	mix absinthe.schema.sdl &&\
+	mix docs
