@@ -122,6 +122,24 @@ defmodule MyDietWeb.SchemaTest do
     end
   end
 
+  describe "mutation: createFoodCategory" do
+    test "creates a new food category", %{conn: conn} do
+      query = """
+      mutation {
+        createFoodCategory(name: "New Category") {
+          id
+          name
+        }
+      }
+      """
+
+      assert %{"createFoodCategory" => food_category_data} = query_graphql(conn, query)
+
+      assert Map.has_key?(food_category_data, "id")
+      assert food_category_data["name"] == "New Category"
+    end
+  end
+
   defp query_graphql(conn, query) do
     conn
     |> post("/api", %{"query" => query})

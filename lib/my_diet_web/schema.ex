@@ -35,4 +35,19 @@ defmodule MyDietWeb.Schema do
     @desc "Get all meals"
     field :meals, list_of(:meal), resolve: &Meals.list_meals/3
   end
+
+  mutation do
+    @desc "Create a new food category"
+    field :create_food_category, type: :food_category do
+      arg(:name, non_null(:string))
+
+      resolve(fn _parent, %{name: name}, _context ->
+        {:ok,
+         %MyDiet.Foods.FoodCategories.FoodCategory{
+           id: 1,
+           name: name
+         }}
+      end)
+    end
+  end
 end
