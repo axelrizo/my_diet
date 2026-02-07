@@ -67,9 +67,7 @@ COPY rel rel
 RUN mix release
 
 # Generate docs
-RUN mix docs
-
-COPY doc/ priv/static/doc
+RUN mix docs && cp -r doc/ priv/static/doc
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
