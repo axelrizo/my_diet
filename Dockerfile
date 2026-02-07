@@ -62,8 +62,9 @@ RUN mix assets.deploy
 
 # Generate docs
 COPY docs docs
-RUN mix docs
-COPY doc priv/static/doc
+RUN mix docs &&\
+  mkdir -p priv/static/doc &&\
+  cp -r doc/* priv/static/doc/
 
 # Changes to config/runtime.exs don't require recompiling the code
 COPY config/runtime.exs config/
