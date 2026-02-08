@@ -5,6 +5,9 @@ defmodule MyDietWeb.Schema do
 
   use Absinthe.Schema
 
+  import AbsintheErrorPayload.Payload
+
+  import_types(AbsintheErrorPayload.ValidationMessageTypes)
   import_types(MyDietWeb.Schema.ScalarTypes)
   import_types(MyDietWeb.Schema.FoodsTypes)
   import_types(MyDietWeb.Schema.MealsTypes)
@@ -35,9 +38,6 @@ defmodule MyDietWeb.Schema do
     @desc "Get all meals"
     field :meals, list_of(:meal), resolve: &Meals.list_meals/3
   end
-
-  import AbsintheErrorPayload.Payload
-  import_types(AbsintheErrorPayload.ValidationMessageTypes)
 
   payload_object(:food_category_payload, :food_category)
 
