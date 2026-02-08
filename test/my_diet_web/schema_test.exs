@@ -1,13 +1,19 @@
 defmodule MyDietWeb.SchemaTest do
   use MyDietWeb.ConnCase, async: true
 
+  alias AbsintheErrorPayload.ValidationMessage
+  alias MyDiet.Foods.FoodCategories.FoodCategory
+
+  import AbsintheErrorPayload.TestHelper
+
   describe "query: foods" do
     test "returns food list", %{conn: conn} do
       food = insert(:food)
 
       query = "{ foods { id name } }"
 
-      assert %{"foods" => [food_data]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"foods" => [food_data]} = data
 
       assert int_equal?(food.id, food_data["id"])
       assert food.name == food_data["name"]
@@ -19,7 +25,8 @@ defmodule MyDietWeb.SchemaTest do
 
       query = "{ foods { foodCategory { id name } } }"
 
-      assert %{"foods" => [food]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"foods" => [food]} = data
       assert %{"foodCategory" => food_category_data} = food
 
       assert int_equal?(food_category.id, food_category_data["id"])
@@ -31,7 +38,8 @@ defmodule MyDietWeb.SchemaTest do
 
       query = "{ foods { foodMeasures { id portion proteins carbohydrates fats } } }"
 
-      assert %{"foods" => [food_data]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"foods" => [food_data]} = data
       assert %{"foodMeasures" => [food_measures_data]} = food_data
 
       assert int_equal?(food_measure.id, food_measures_data["id"])
@@ -46,7 +54,8 @@ defmodule MyDietWeb.SchemaTest do
 
       query = "{ foods { name foodMeasures { id portion mealIngredients { id quantity } } } }"
 
-      assert %{"foods" => [food_data]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"foods" => [food_data]} = data
       assert %{"foodMeasures" => [food_measures_data]} = food_data
       assert %{"mealIngredients" => [meal_ingredient_data]} = food_measures_data
 
@@ -61,7 +70,8 @@ defmodule MyDietWeb.SchemaTest do
 
       query = "{ foodCategories { id name } }"
 
-      assert %{"foodCategories" => [food_category_data]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"foodCategories" => [food_category_data]} = data
 
       assert int_equal?(food_category.id, food_category_data["id"])
       assert food_category.name == food_category_data["name"]
@@ -72,7 +82,9 @@ defmodule MyDietWeb.SchemaTest do
 
       query = "{ foodCategories { foods { id name } } }"
 
-      assert %{"foodCategories" => [food_category_data]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"foodCategories" => [food_category_data]} = data
+
       assert %{"foods" => [food_data]} = food_category_data
 
       assert int_equal?(food.id, food_data["id"])
@@ -86,7 +98,8 @@ defmodule MyDietWeb.SchemaTest do
 
       query = "{ meals { id name } }"
 
-      assert %{"meals" => [meal_data]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"meals" => [meal_data]} = data
 
       assert int_equal?(meal.id, meal_data["id"])
       assert meal.name == meal_data["name"]
@@ -97,7 +110,8 @@ defmodule MyDietWeb.SchemaTest do
 
       query = "{ meals { mealIngredients { id quantity } } }"
 
-      assert %{"meals" => [meal_data]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"meals" => [meal_data]} = data
       assert %{"mealIngredients" => [meal_ingredient_data]} = meal_data
 
       assert int_equal?(meal_ingredient.id, meal_ingredient_data["id"])
@@ -110,7 +124,8 @@ defmodule MyDietWeb.SchemaTest do
       query =
         "{ meals { mealIngredients { foodMeasure { id portion proteins carbohydrates fats } } } }"
 
-      assert %{"meals" => [meal_data]} = query_graphql(conn, query)
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"meals" => [meal_data]} = data
       assert %{"mealIngredients" => [meal_ingredient_data]} = meal_data
       assert %{"foodMeasure" => food_measure_data} = meal_ingredient_data
 
@@ -124,20 +139,52 @@ defmodule MyDietWeb.SchemaTest do
 
   describe "mutation: createFoodCategory" do
     test "creates a new food category", %{conn: conn} do
-      query = ~s[mutation { createFoodCategory(name: "New Category") { id name } }]
+      food_name = "New Category"
 
-      assert %{"createFoodCategory" => food_category} = query_graphql(conn, query)
+      query = """
+        mutation { createFoodCategory(name: \"#{food_name}\") {
+            successful
+            messages { field message code }
+            result { id name }
+        }}
+      """
 
-      assert Map.has_key?(food_category, "id")
-      assert food_category["name"] == "New Category"
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"createFoodCategory" => payload} = data
+
+      fields = %{name: :string}
+      expected = %FoodCategory{name: food_name}
+      assert_mutation_success(expected, payload, fields)
+    end
+
+    test "returns error for duplicate food category", %{conn: conn} do
+      food_category = insert(:food_category)
+
+      query = """
+      mutation { createFoodCategory(name: "#{food_category.name}") {
+          successful
+          messages { field message code }
+          result { id name }
+      }}
+      """
+
+      assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
+      assert %{"createFoodCategory" => payload} = data
+
+      expected = %ValidationMessage{
+        code: :unique,
+        field: :name,
+        message: "has already been taken"
+      }
+
+      assert_mutation_failure([expected], payload, [:field, :message, :code])
     end
   end
 
-  defp query_graphql(conn, query) do
+  defp run_graphql_request(conn, query_params) do
     conn
-    |> post("/api", %{"query" => query})
+    |> post("/api", query_params)
     |> json_response(200)
-    |> Map.fetch!("data")
   end
 
   defp decimal_equal?(%Decimal{} = decimal_1, decimal_2) when is_binary(decimal_2) do
