@@ -13,7 +13,7 @@
 [![Deploy to Production](https://github.com/axelrizo/my_diet/actions/workflows/fly-deploy.yml/badge.svg)](https://github.com/axelrizo/my_diet/actions/workflows/fly-deploy.yml)
 [![Last Updated](https://img.shields.io/github/last-commit/axelrizo/my_diet.svg)](https://github.com/axelrizo/my_diet/commits/main)
 
-A managing application to handle diets, generate shopping lists and else. You can measure your calories and organize your meal prep for the week.
+A managing application to handle diets, generate shopping lists and so on. You can measure your calories and organize your meal prep for the week.
 
 - Links:
   - [Admin dashboard(DEMO)](https://my-diet-solitary-leaf-113.fly.dev/admin/)
