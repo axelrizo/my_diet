@@ -39,8 +39,6 @@ defmodule MyDietWeb.Schema do
     field :meals, list_of(:meal), resolve: &Meals.list_meals/3
   end
 
-  payload_object(:food_category_payload, :food_category)
-
   mutation do
     @desc "Create a new food category"
     field :create_food_category, type: :food_category_payload do

@@ -5,6 +5,7 @@ defmodule MyDietWeb.Schema.FoodsTypes do
 
   use Absinthe.Schema.Notation
 
+  import AbsintheErrorPayload.Payload
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   alias MyDiet.Foods
@@ -36,6 +37,9 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     @desc "The food items that belong to this category"
     field :foods, list_of(:food), resolve: dataloader(Foods)
   end
+
+  @desc "Payload object for food category mutations"
+  payload_object(:food_category_payload, :food_category)
 
   @desc "A food measure, which specifies the portion size and its nutritional information for a specific food"
   object :food_measure do
