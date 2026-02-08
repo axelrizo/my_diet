@@ -36,13 +36,24 @@ defmodule MyDietWeb.Schema do
     field :meals, list_of(:meal), resolve: &Meals.list_meals/3
   end
 
+  import AbsintheErrorPayload.Payload
+  import_types(AbsintheErrorPayload.ValidationMessageTypes)
+
+  input_object :create_food_category_input do
+    @desc "Name of the food category, e.g., 'Fruits', 'Vegetables', Must be unique."
+    field :name, non_null(:string)
+  end
+
+  payload_object(:food_category_payload, :food_category)
+
   mutation do
     @desc "Create a new food category"
-    field :create_food_category, type: :food_category do
+    field :create_food_category, type: :food_category_payload do
       @desc "Name of the food category, e.g., 'Fruits', 'Vegetables', Must be unique."
-      arg(:name, non_null(:string))
+      arg(:input, non_null(:create_food_category_input))
 
       resolve(&Foods.create_food_category/3)
+      middleware(&build_payload/2)
     end
   end
 end
