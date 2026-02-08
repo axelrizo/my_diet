@@ -13,10 +13,10 @@ defmodule MyDietWeb.SchemaTest do
       query = "{ foods { id name } }"
 
       assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
-      assert %{"foods" => [food_data]} = data
+      assert %{"foods" => [result]} = data
 
-      assert int_equal?(food.id, food_data["id"])
-      assert food.name == food_data["name"]
+      fields = %{id: :number, name: :string}
+      assert_equivalent_graphql(food, result, fields)
     end
 
     test "returns food category relation", %{conn: conn} do
