@@ -5,7 +5,9 @@ defmodule MyDietWeb.Schema do
 
   use Absinthe.Schema
 
-  import_types(MyDietWeb.Schema.ScalarTypes)
+  import AbsintheErrorPayload.Payload
+
+  import_types(AbsintheErrorPayload.ValidationMessageTypes)
   import_types(MyDietWeb.Schema.FoodsTypes)
   import_types(MyDietWeb.Schema.MealsTypes)
 
@@ -34,5 +36,16 @@ defmodule MyDietWeb.Schema do
 
     @desc "Get all meals"
     field :meals, list_of(:meal), resolve: &Meals.list_meals/3
+  end
+
+  mutation do
+    @desc "Create a new food category"
+    field :create_food_category, type: :food_category_payload do
+      @desc "Name of the food category, e.g., 'Fruits', 'Vegetables', Must be unique."
+      arg(:name, non_null(:string))
+
+      resolve(&Foods.create_food_category/3)
+      middleware(&build_payload/2)
+    end
   end
 end

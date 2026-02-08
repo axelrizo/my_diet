@@ -5,10 +5,12 @@ defmodule MyDietWeb.Schema.FoodsTypes do
 
   use Absinthe.Schema.Notation
 
+  import AbsintheErrorPayload.Payload
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   alias MyDiet.Foods
   alias MyDiet.Meals
+  alias MyDietWeb.Resolvers.Fields
 
   @desc "A food, which belongs to a category and has multiple measures"
   object :food do
@@ -37,6 +39,9 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     field :foods, list_of(:food), resolve: dataloader(Foods)
   end
 
+  @desc "Payload object for food category mutations"
+  payload_object(:food_category_payload, :food_category)
+
   @desc "A food measure, which specifies the portion size and its nutritional information for a specific food"
   object :food_measure do
     @desc "The unique identifier of the food measure"
@@ -46,13 +51,13 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     field :portion, non_null(:string)
 
     @desc "Fats in grams for this measure of the food"
-    field :fats, non_null(:decimal)
+    field :fats, non_null(:float), resolve: Fields.decimal_to_float(:fats)
 
     @desc "Carbohydrates in grams for this measure of the food"
-    field :carbohydrates, non_null(:decimal)
+    field :carbohydrates, non_null(:float), resolve: Fields.decimal_to_float(:carbohydrates)
 
     @desc "Proteins in grams for this measure of the food"
-    field :proteins, non_null(:decimal)
+    field :proteins, non_null(:float), resolve: Fields.decimal_to_float(:proteins)
 
     @desc "The food that this measure belongs to"
     field :food, :food, resolve: dataloader(Foods)

@@ -9,6 +9,7 @@ defmodule MyDietWeb.Schema.MealsTypes do
 
   alias MyDiet.Foods
   alias MyDiet.Meals
+  alias MyDietWeb.Resolvers.Fields
 
   @desc "A meal, which consists of multiple food measures (meal ingredients)"
   object :meal do
@@ -28,7 +29,7 @@ defmodule MyDietWeb.Schema.MealsTypes do
     field :id, :id
 
     @desc "The quantity of the food measure used in this meal ingredient (e.g., 2 for 2 cups)"
-    field :quantity, non_null(:decimal)
+    field :quantity, non_null(:float), resolve: Fields.decimal_to_float(:quantity)
 
     @desc "The meal that this ingredient belongs to"
     field :food_measure, :food_measure, resolve: dataloader(Foods)

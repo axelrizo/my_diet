@@ -1,4 +1,5 @@
 schema {
+  mutation: RootMutationType
   query: RootQueryType
 }
 
@@ -11,6 +12,14 @@ type RootQueryType {
 
   "Get all meals"
   meals: [Meal]
+}
+
+type RootMutationType {
+  "Create a new food category"
+  createFoodCategory(
+    "Name of the food category, e.g., 'Fruits', 'Vegetables', Must be unique."
+    name: String!
+  ): FoodCategoryPayload
 }
 
 "A meal, which consists of multiple food measures (meal ingredients)"
@@ -31,7 +40,7 @@ type MealIngredient {
   id: ID
 
   "The quantity of the food measure used in this meal ingredient (e.g., 2 for 2 cups)"
-  quantity: Decimal!
+  quantity: Float!
 
   "The meal that this ingredient belongs to"
   foodMeasure: FoodMeasure
@@ -64,6 +73,18 @@ type FoodCategory {
   foods: [Food]
 }
 
+"Payload object for food category mutations"
+type FoodCategoryPayload {
+  "Indicates if the mutation completed successfully or not."
+  successful: Boolean!
+
+  "A list of failed validations. May be blank or null if mutation succeeded."
+  messages: [ValidationMessage]
+
+  "The object created\/updated\/deleted by the mutation. May be null if mutation failed."
+  result: FoodCategory
+}
+
 "A food measure, which specifies the portion size and its nutritional information for a specific food"
 type FoodMeasure {
   "The unique identifier of the food measure"
@@ -73,13 +94,13 @@ type FoodMeasure {
   portion: String!
 
   "Fats in grams for this measure of the food"
-  fats: Decimal!
+  fats: Float!
 
   "Carbohydrates in grams for this measure of the food"
-  carbohydrates: Decimal!
+  carbohydrates: Float!
 
   "Proteins in grams for this measure of the food"
-  proteins: Decimal!
+  proteins: Float!
 
   "The food that this measure belongs to"
   food: Food
@@ -88,5 +109,68 @@ type FoodMeasure {
   mealIngredients: [MealIngredient]
 }
 
-"A decimal value"
-scalar Decimal
+type ValidationOption {
+  "The name of a variable to be substituted in a validation message template"
+  key: String!
+
+  "The value of a variable to be substituted in a validation message template"
+  value: String!
+}
+
+"""
+Validation messages are returned when mutation input does not meet the requirements.
+  While client-side validation is highly recommended to provide the best User Experience,
+  All inputs will always be validated server-side.
+
+  Some examples of validations are:
+
+  * Username must be at least 10 characters
+  * Email field does not contain an email address
+  * Birth Date is required
+
+  While GraphQL has support for required values, mutation data fields are always
+  set to optional in our API. This allows 'required field' messages
+  to be returned in the same manner as other validations. The only exceptions
+  are id fields, which may be required to perform updates or deletes.
+"""
+type ValidationMessage {
+  """
+  The input field that the error applies to. The field can be used to
+  identify which field the error message should be displayed next to in the
+  presentation layer.
+
+  If there are multiple errors to display for a field, multiple validation
+  messages will be in the result.
+
+  This field may be null in cases where an error cannot be applied to a specific field.
+  """
+  field: String
+
+  """
+  A friendly error message, appropriate for display to the end user.
+
+  The message is interpolated to include the appropriate variables.
+
+  Example: `Username must be at least 10 characters`
+
+  This message may change without notice, so we do not recommend you match against the text.
+  Instead, use the *code* field for matching.
+  """
+  message: String
+
+  "A unique error code for the type of validation used."
+  code: String!
+
+  """
+  A template used to generate the error message, with placeholders for option substitution.
+
+  Example: `Username must be at least {count} characters`
+
+  This message may change without notice, so we do not recommend you match against the text.
+  Instead, use the *code* field for matching.
+  """
+  template: String
+
+  "A list of substitutions to be applied to a validation message template"
+  options: [ValidationOption]
+}

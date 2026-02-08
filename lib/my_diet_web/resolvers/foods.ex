@@ -4,6 +4,7 @@ defmodule MyDietWeb.Resolvers.Foods do
   """
 
   alias MyDiet.Foods.Food
+  alias MyDiet.Foods.FoodCategories
   alias MyDiet.Foods.FoodCategories.FoodCategory
   alias MyDiet.Repo
 
@@ -21,5 +22,14 @@ defmodule MyDietWeb.Resolvers.Foods do
   @spec list_food_categories(term(), term(), term()) :: {:ok, [FoodCategory.t()]}
   def list_food_categories(_parent, _args, _resolution) do
     {:ok, Repo.all(FoodCategory)}
+  end
+
+  @doc """
+  Resolver for creating a new food category.
+  """
+  @spec create_food_category(term(), map(), term()) ::
+          {:ok, FoodCategory.t()} | {:error, Ecto.Changeset.t()}
+  def create_food_category(_parent, attrs, _resolution) do
+    FoodCategories.create(attrs)
   end
 end

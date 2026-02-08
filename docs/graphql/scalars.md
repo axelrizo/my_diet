@@ -4,9 +4,11 @@
 
 The `Boolean` scalar type represents `true` or `false`.
 
-## Decimal
+## Float
 
-It represents a decimal value `Decimal` type from the `decimal` library. It can be used to represent precise decimal numbers.
+The `Float` scalar type represents signed double-precision fractional
+values as specified by
+[IEEE 754](https://en.wikipedia.org/wiki/IEEE_754).
 
 ## ID
 

@@ -5,6 +5,8 @@ defmodule MyDiet.Foods.FoodCategories.FoodCategory do
 
   use Ecto.Schema
 
+  import Ecto.Changeset
+
   alias MyDiet.Foods.Food
 
   @typedoc """
@@ -32,5 +34,13 @@ defmodule MyDiet.Foods.FoodCategories.FoodCategory do
     has_many :foods, Food
 
     timestamps()
+  end
+
+  @doc false
+  def changeset(food_category, attrs) do
+    food_category
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
+    |> unique_constraint(:name)
   end
 end

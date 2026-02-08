@@ -150,6 +150,7 @@ defmodule MyDiet.MixProject do
       {:absinthe, "~> 1.9"},
       {:absinthe_plug, "~> 1.5"},
       {:dataloader, "~> 1.0.0"},
+      {:absinthe_error_payload, "~> 1.0"},
       # Admin dashboard
       {:kaffy, "~> 0.11.0"},
       # Docs
