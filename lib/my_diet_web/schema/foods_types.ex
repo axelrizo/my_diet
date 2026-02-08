@@ -10,6 +10,7 @@ defmodule MyDietWeb.Schema.FoodsTypes do
 
   alias MyDiet.Foods
   alias MyDiet.Meals
+  alias MyDietWeb.Resolvers.Fields
 
   @desc "A food, which belongs to a category and has multiple measures"
   object :food do
@@ -50,24 +51,18 @@ defmodule MyDietWeb.Schema.FoodsTypes do
     field :portion, non_null(:string)
 
     @desc "Fats in grams for this measure of the food"
-    field :fats, non_null(:float), resolve: decimal_to_float(:fats)
+    field :fats, non_null(:float), resolve: Fields.decimal_to_float(:fats)
 
     @desc "Carbohydrates in grams for this measure of the food"
-    field :carbohydrates, non_null(:float), resolve: decimal_to_float(:carbohydrates)
+    field :carbohydrates, non_null(:float), resolve: Fields.decimal_to_float(:carbohydrates)
 
     @desc "Proteins in grams for this measure of the food"
-    field :proteins, non_null(:float), resolve: decimal_to_float(:proteins)
+    field :proteins, non_null(:float), resolve: Fields.decimal_to_float(:proteins)
 
     @desc "The food that this measure belongs to"
     field :food, :food, resolve: dataloader(Foods)
 
     @desc "The meal ingredients that use this food measure"
     field :meal_ingredients, list_of(:meal_ingredient), resolve: dataloader(Meals)
-  end
-
-  defp decimal_to_float(field_name) do
-    fn parent, _args, _resolution ->
-      {:ok, Decimal.to_float(Map.get(parent, field_name))}
-    end
   end
 end

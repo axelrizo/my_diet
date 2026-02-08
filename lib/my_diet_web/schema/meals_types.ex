@@ -7,6 +7,7 @@ defmodule MyDietWeb.Schema.MealsTypes do
 
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
+  alias MyDietWeb.Resolvers.Fields
   alias MyDiet.Foods
   alias MyDiet.Meals
 
@@ -28,7 +29,7 @@ defmodule MyDietWeb.Schema.MealsTypes do
     field :id, :id
 
     @desc "The quantity of the food measure used in this meal ingredient (e.g., 2 for 2 cups)"
-    field :quantity, non_null(:decimal)
+    field :quantity, non_null(:float), resolve: Fields.decimal_to_float(:quantity)
 
     @desc "The meal that this ingredient belongs to"
     field :food_measure, :food_measure, resolve: dataloader(Foods)
