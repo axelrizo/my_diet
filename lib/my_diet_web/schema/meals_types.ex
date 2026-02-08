@@ -7,9 +7,9 @@ defmodule MyDietWeb.Schema.MealsTypes do
 
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
-  alias MyDietWeb.Resolvers.Fields
   alias MyDiet.Foods
   alias MyDiet.Meals
+  alias MyDietWeb.Resolvers.Fields
 
   @desc "A meal, which consists of multiple food measures (meal ingredients)"
   object :meal do

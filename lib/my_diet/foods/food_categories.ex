@@ -3,9 +3,9 @@ defmodule MyDiet.Foods.FoodCategories do
   Context module for managing food categories queries, operations, and some business logic.
   """
 
+  alias Ecto.Changeset
   alias MyDiet.Foods.FoodCategories.FoodCategory
   alias MyDiet.Repo
-  alias Ecto.Changeset
 
   @doc """
   Creates a new food category with the given attributes.

@@ -4,8 +4,8 @@ defmodule MyDietWeb.Resolvers.Foods do
   """
 
   alias MyDiet.Foods.Food
-  alias MyDiet.Foods.FoodCategories.FoodCategory
   alias MyDiet.Foods.FoodCategories
+  alias MyDiet.Foods.FoodCategories.FoodCategory
   alias MyDiet.Repo
 
   @doc """

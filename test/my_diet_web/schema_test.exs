@@ -1,10 +1,10 @@
 defmodule MyDietWeb.SchemaTest do
   use MyDietWeb.ConnCase, async: true
 
+  import AbsintheErrorPayload.TestHelper
+
   alias AbsintheErrorPayload.ValidationMessage
   alias MyDiet.Foods.FoodCategories.FoodCategory
-
-  import AbsintheErrorPayload.TestHelper
 
   describe "query: foods" do
     test "returns food list", %{conn: conn} do
