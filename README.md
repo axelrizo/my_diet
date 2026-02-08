@@ -39,7 +39,7 @@ A managing application to handle diets, generate shopping lists and else. You ca
 
 ## Docs
 
-You can either read the [docs online](https://my-diet-solitary-leaf-113.fly.dev/doc/readme.html), check the folder [/docs](./docs/) or generate them directly using:
+You can either read the [docs online](https://my-diet-solitary-leaf-113.fly.dev/doc/readme.html), check the folder /docs or generate them directly using:
 
 ```bash
 mix docs --open
