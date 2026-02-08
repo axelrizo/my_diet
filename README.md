@@ -1,11 +1,13 @@
 # MyDiet
 
-![Elixir](https://img.shields.io/badge/elixir-%234B275F.svg?style=for-the-badge&logo=elixir&logoColor=white)
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![Phoenix Framework](https://img.shields.io/badge/phoenixframework-%23FD4F00.svg?style=for-the-badge&logo=phoenixframework&logoColor=black)
 ![GraphQL](https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+![Elixir](https://img.shields.io/badge/elixir-%234B275F.svg?style=for-the-badge&logo=elixir&logoColor=white)
+![Phoenix Framework](https://img.shields.io/badge/phoenixframework-%23FD4F00.svg?style=for-the-badge&logo=phoenixframework&logoColor=black)
 ![Ecto](https://img.shields.io/badge/Ecto-%2328a745.svg?style=for-the-badge&logo=elixir&logoColor=white)
+![Absinthe](https://img.shields.io/badge/Absinthe-%2328a745.svg?style=for-the-badge&logo=elixir&logoColor=white)
 
 [![CI](https://github.com/axelrizo/my_diet/actions/workflows/ci.yml/badge.svg)](https://github.com/axelrizo/my_diet/actions/workflows/ci.yml)
 [![Deploy to Production](https://github.com/axelrizo/my_diet/actions/workflows/fly-deploy.yml/badge.svg)](https://github.com/axelrizo/my_diet/actions/workflows/fly-deploy.yml)
