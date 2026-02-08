@@ -8,7 +8,6 @@ defmodule MyDietWeb.Schema do
   import AbsintheErrorPayload.Payload
 
   import_types(AbsintheErrorPayload.ValidationMessageTypes)
-  import_types(MyDietWeb.Schema.ScalarTypes)
   import_types(MyDietWeb.Schema.FoodsTypes)
   import_types(MyDietWeb.Schema.MealsTypes)
 
