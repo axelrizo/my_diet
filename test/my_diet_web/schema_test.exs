@@ -1,7 +1,6 @@
 defmodule MyDietWeb.SchemaTest do
   use MyDietWeb.ConnCase, async: true
 
-  alias MyDiet.Foods.FoodMeasures.FoodMeasure
   alias AbsintheErrorPayload.ValidationMessage
   alias MyDiet.Foods.FoodCategories.FoodCategory
 
@@ -17,7 +16,8 @@ defmodule MyDietWeb.SchemaTest do
       assert %{"foods" => [result]} = data
 
       fields = %{id: :number, name: :string}
-      assert_equivalent_graphql(food, result, fields)
+      expected = food
+      assert_equivalent_graphql(expected, result, fields)
     end
 
     test "returns food category relation", %{conn: conn} do
@@ -31,10 +31,10 @@ defmodule MyDietWeb.SchemaTest do
       assert %{"foodCategory" => result} = food
 
       fields = %{id: :number, name: :string}
-      assert_equivalent_graphql(food_category, result, fields)
+      expected = food_category
+      assert_equivalent_graphql(expected, result, fields)
     end
 
-    @tag :dbg
     test "returns food measures relation", %{conn: conn} do
       food_measure = insert(:food_measure)
 
@@ -52,15 +52,14 @@ defmodule MyDietWeb.SchemaTest do
         fats: :float
       }
 
-      food_measure = %FoodMeasure{
-        id: food_measure.id,
-        portion: food_measure.portion,
-        proteins: Decimal.to_float(food_measure.proteins),
-        carbohydrates: Decimal.to_float(food_measure.carbohydrates),
-        fats: Decimal.to_float(food_measure.fats)
+      expected = %{
+        food_measure
+        | proteins: Decimal.to_float(food_measure.proteins),
+          carbohydrates: Decimal.to_float(food_measure.carbohydrates),
+          fats: Decimal.to_float(food_measure.fats)
       }
 
-      assert_equivalent_graphql(food_measure, result, fields)
+      assert_equivalent_graphql(expected, result, fields)
     end
 
     test "returns meal ingredients relation", %{conn: conn} do
@@ -71,10 +70,12 @@ defmodule MyDietWeb.SchemaTest do
       assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
       assert %{"foods" => [food_data]} = data
       assert %{"foodMeasures" => [food_measures_data]} = food_data
-      assert %{"mealIngredients" => [meal_ingredient_data]} = food_measures_data
+      assert %{"mealIngredients" => [result]} = food_measures_data
 
-      assert int_equal?(meal_ingredient.id, meal_ingredient_data["id"])
-      assert decimal_equal?(meal_ingredient.quantity, meal_ingredient_data["quantity"])
+      expected = %{meal_ingredient | quantity: Decimal.to_float(meal_ingredient.quantity)}
+
+      fields = %{id: :number, quantity: :float}
+      assert_equivalent_graphql(expected, result, fields)
     end
   end
 
@@ -85,10 +86,11 @@ defmodule MyDietWeb.SchemaTest do
       query = "{ foodCategories { id name } }"
 
       assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
-      assert %{"foodCategories" => [food_category_data]} = data
+      assert %{"foodCategories" => [result]} = data
 
-      assert int_equal?(food_category.id, food_category_data["id"])
-      assert food_category.name == food_category_data["name"]
+      expected = food_category
+      fields = %{id: :number, name: :string}
+      assert_equivalent_graphql(expected, result, fields)
     end
 
     test "returns food relation", %{conn: conn} do
@@ -98,11 +100,11 @@ defmodule MyDietWeb.SchemaTest do
 
       assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
       assert %{"foodCategories" => [food_category_data]} = data
+      assert %{"foods" => [result]} = food_category_data
 
-      assert %{"foods" => [food_data]} = food_category_data
-
-      assert int_equal?(food.id, food_data["id"])
-      assert food.name == food_data["name"]
+      expected = food
+      fields = %{id: :number, name: :string}
+      assert_equivalent_graphql(expected, result, fields)
     end
   end
 
@@ -113,10 +115,11 @@ defmodule MyDietWeb.SchemaTest do
       query = "{ meals { id name } }"
 
       assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
-      assert %{"meals" => [meal_data]} = data
+      assert %{"meals" => [result]} = data
 
-      assert int_equal?(meal.id, meal_data["id"])
-      assert meal.name == meal_data["name"]
+      expected = meal
+      fields = %{id: :number, name: :string}
+      assert_equivalent_graphql(expected, result, fields)
     end
 
     test "returns meal ingredient relation", %{conn: conn} do
@@ -126,10 +129,15 @@ defmodule MyDietWeb.SchemaTest do
 
       assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
       assert %{"meals" => [meal_data]} = data
-      assert %{"mealIngredients" => [meal_ingredient_data]} = meal_data
+      assert %{"mealIngredients" => [result]} = meal_data
 
-      assert int_equal?(meal_ingredient.id, meal_ingredient_data["id"])
-      assert decimal_equal?(meal_ingredient.quantity, meal_ingredient_data["quantity"])
+      expected = %{
+        meal_ingredient
+        | quantity: Decimal.to_float(meal_ingredient.quantity)
+      }
+
+      fields = %{id: :number, quantity: :float}
+      assert_equivalent_graphql(expected, result, fields)
     end
 
     test "returns food measure relation", %{conn: conn} do
@@ -141,25 +149,24 @@ defmodule MyDietWeb.SchemaTest do
       assert %{"data" => data} = run_graphql_request(conn, %{"query" => query})
       assert %{"meals" => [meal_data]} = data
       assert %{"mealIngredients" => [meal_ingredient_data]} = meal_data
-      assert %{"foodMeasure" => food_measure_data} = meal_ingredient_data
+      assert %{"foodMeasure" => result} = meal_ingredient_data
 
       fields = %{
         id: :number,
-        portion: :number,
+        portion: :string,
         proteins: :float,
         carbohydrates: :float,
         fats: :float
       }
 
-      food_measure = %FoodMeasure{
-        id: food_measure.id,
-        portion: food_measure.portion,
-        proteins: Decimal.to_float(food_measure.proteins),
-        carbohydrates: Decimal.to_float(food_measure.carbohydrates),
-        fats: Decimal.to_float(food_measure.fats)
+      expected = %{
+        food_measure
+        | proteins: Decimal.to_float(food_measure.proteins),
+          carbohydrates: Decimal.to_float(food_measure.carbohydrates),
+          fats: Decimal.to_float(food_measure.fats)
       }
 
-      assert_equivalent_graphql(food_measure, food_measure_data, fields)
+      assert_equivalent_graphql(expected, result, fields)
     end
   end
 
@@ -211,13 +218,5 @@ defmodule MyDietWeb.SchemaTest do
     conn
     |> post("/api", query_params)
     |> json_response(200)
-  end
-
-  defp decimal_equal?(%Decimal{} = decimal_1, decimal_2) when is_binary(decimal_2) do
-    Decimal.equal?(decimal_1, Decimal.new(decimal_2))
-  end
-
-  defp int_equal?(id_1, id_2) when is_integer(id_1) and is_binary(id_2) do
-    id_1 == String.to_integer(id_2)
   end
 end
