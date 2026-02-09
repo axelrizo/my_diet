@@ -24,6 +24,7 @@ defmodule MyDiet.MixProject do
       extra_section: "GUIDES",
       extras: extras(),
       groups_for_extras: groups_for_extras(),
+      groups_for_modules: groups_for_modules(),
       before_closing_body_tag: &before_closing_body_tag/1
     ]
   end
@@ -50,6 +51,60 @@ defmodule MyDiet.MixProject do
     [
       Introduction: ~r/^docs\/introduction\//,
       GraphQL: ~r/^docs\/graphql\//
+    ]
+  end
+
+  defp groups_for_modules do
+    [
+      Foods: [
+        MyDiet.Foods,
+        MyDiet.Foods.Food,
+        MyDiet.Foods.FoodCategories,
+        MyDiet.Foods.FoodCategories.FoodCategory,
+        MyDiet.Foods.FoodMeasures.FoodMeasure
+      ],
+      Meals: [
+        MyDiet.Meals,
+        MyDiet.Meals.Meal,
+        MyDiet.Meals.MealIngredients.MealIngredient
+      ],
+      Diets: [
+        MyDiet.Diets.Diet,
+        MyDiet.Diets.DietMeals.DietMeal
+      ],
+      GraphQL: [
+        MyDietWeb.Schema,
+        MyDietWeb.Resolvers.Fields,
+        MyDietWeb.Resolvers.Foods,
+        MyDietWeb.Schema.FoodsTypes,
+        MyDietWeb.Resolvers.Meals,
+        MyDietWeb.Schema.MealsTypes
+      ],
+      Web: [
+        MyDietWeb,
+        MyDietWeb.PageController,
+        MyDietWeb.PageHTML,
+        MyDietWeb.Gettext,
+        MyDietWeb.Layouts,
+        MyDietWeb.Router,
+        MyDietWeb.Endpoint,
+        MyDietWeb.CoreComponents,
+        MyDietWeb.ErrorHTML,
+        MyDietWeb.ErrorJSON
+      ],
+      Databases: [
+        MyDiet.Repo
+      ],
+      "Admin Dashboard": [
+        MyDiet.Kaffy.Config
+      ],
+      Telemetery: [
+        MyDietWeb.Telemetry
+      ],
+      Extras: [
+        MyDiet.Mailer,
+        MyDiet.Release
+      ]
     ]
   end
 
